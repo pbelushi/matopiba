@@ -27,7 +27,8 @@ ALVOS: dict[str, list[str]] = {
     "etapa6": ["matopiba.s06_instrumento"],
     "etapa7": ["matopiba.s07_paineis"],
     "analise": ["matopiba.s08_descritiva", "matopiba.s08_did", "matopiba.s08_iv",
-                "matopiba.s08_censos", "matopiba.s08_heterogeneidade", "matopiba.s08_robustez"],
+                "matopiba.s08_censos", "matopiba.s08_heterogeneidade", "matopiba.s08_robustez",
+                "matopiba.s08_luzes_sensor"],
 }
 ALVOS["all"] = [m for k in [f"etapa{i}" for i in range(8)] + ["analise"] for m in ALVOS[k]]
 # fora do "all": roda no ambiente opcional do HonestDiD (numpy < 2.4; ver README)

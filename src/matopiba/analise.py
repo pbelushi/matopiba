@@ -33,9 +33,16 @@ class Desfecho:
     anos: tuple[int, int]
     log: bool = False
     so_anos_impares: bool = False
+    por: str | None = None          # denominador (ex.: populacao), quando a coluna é um total
 
 
 DESFECHOS = [Desfecho(**d) for d in CFG["desfechos"]]
+# desfechos usados só em análises específicas (heterogeneidade, luzes por sensor, HonestDiD)
+DESFECHOS_EXTRA = [Desfecho(**d) for d in CFG.get("desfechos_extra", [])]
+
+
+def desfecho(nome: str) -> Desfecho:
+    return next(d for d in DESFECHOS + DESFECHOS_EXTRA if d.nome == nome)
 
 
 # ---------------------------------------------------------------- dados
@@ -47,8 +54,20 @@ def carregar(nivel: str = "municipio") -> pd.DataFrame:
     return p
 
 
+def com_luzes_por_produto(p: pd.DataFrame) -> pd.DataFrame:
+    """Acrescenta a soma de radiância de cada produto (li_dmsp, dmsp, viirs, chen), sem o
+    encadeamento da série principal (painel municipal)."""
+    cols = [f"{k}_soma" for k in ["li_dmsp", "dmsp", "viirs", "chen"]]
+    luz = pd.read_parquet(path("interim") / "luzes_mun_ano.parquet",
+                          columns=["id_municipio", "ano", *cols])
+    return p.drop(columns=[c for c in cols if c in p], errors="ignore").merge(
+        luz, on=["id_municipio", "ano"], how="left")
+
+
 def preparar_desfecho(p: pd.DataFrame, d: Desfecho) -> pd.Series:
     y = p[d.coluna].astype(float)
+    if d.por:
+        y = y / p[d.por].astype(float)
     if d.log:
         y = np.log(y.where(y > 0))
     fora = ~p["ano"].between(*d.anos)

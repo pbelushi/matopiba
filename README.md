@@ -94,7 +94,7 @@ python -m uv pip install --python %USERPROFILE%\.venvs\matopiba_honestdid\Script
 make honestdid PY_HD=%USERPROFILE%\.venvs\matopiba_honestdid\Scripts\python.exe
 ```
 
-Cerca de 100 minutos (PIB e luzes per capita; o teste condicional de Δ^RM domina). Validação do port contra o README do pacote R em
+Cerca de 40 minutos para as 7 especificações de `analise.honestdid` (8 processos em paralelo, ~1 GB de RAM cada; o teste condicional de Δ^RM domina). Validação do port contra o README do pacote R em
 `docs/DECISOES.md`.
 
 ### Custos e tempos

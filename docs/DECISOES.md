@@ -202,3 +202,28 @@ Formato: data — decisão — motivo — alternativas consideradas.
   revisada: nos primeiros 10 anos, nem PIB nem luzes têm efeito robusto a violações de
   tendências paralelas; o efeito nas luzes é o mais limpo (sem pré-tendência) e só se torna
   significativo no longo prazo. Tempo: 99 min para os dois desfechos.
+- 2026-10-21 — Três estudos adicionais (HonestDiD paralelizado: 7 especificações, 41 min).
+  1. Vínculos formais (HonestDiD, e = -5…10). Agro: média e = 0…10 [0,072; 0,230], sem
+     pré-tendência (Wald p 0,48); robusto em Δ^RM até Mbar 0,25 ([0,022; 0,298]), ruptura em
+     0,5. Não agro: [−0,117; −0,013] (Wald p 0,60); ruptura em Mbar 0,1 (e = 5: 0,25). Δ^SD com
+     M = 0 inclui zero nos dois, mas as pré-tendências não são significativas, então a
+     extrapolação linear só amplia a incerteza. O mecanismo de realocação (mais emprego formal
+     agro, menos não agro) é o resultado mais robusto da análise.
+  2. Luzes de longo prazo por sensor (`s08_luzes_sensor`). Em log, a série encadeada é o
+     Li-DMSP até 2013 e o VIIRS depois; a emenda só entra nas comparações que atravessam 2013.
+     Dentro de um único produto nenhum ATT é significativo: Li-DMSP +0,027 (0,031; 81 tratados),
+     DMSP bruto −0,031 (0,032), VIIRS +0,014 (0,029), Chen +0,040 (0,048), contra +0,070**
+     (0,032) na série encadeada. O Li-DMSP sobe em e ≥ 15, mas com 1–3 coortes (e = 20 é só a
+     coorte de 1993). HonestDiD de longo prazo (e = 0…15): Li-DMSP [−0,040; 0,090] e Chen
+     [−0,062; 0,162] já no IC convencional. Leitura: o efeito de longo prazo das luzes depende
+     da emenda DMSP→VIIRS (sensores com sensibilidade diferente a luz fraca) e não se sustenta
+     dentro de um sensor; Li-DMSP e DMSP bruto também divergem entre si. O ATT das luzes passa
+     a ser reportado como não robusto à escolha do sensor.
+  3. PIB com limiar de 5% (hipótese: a pré-tendência seria o tratamento começando antes do
+     cruzamento de 10%). Não se confirma: a pré-tendência fica mais forte com 5% (Wald p 0,001;
+     inclinação +1,4%/ano, ep 0,5%) do que com 10% (p 0,08; +1,0%/ano) ou 20% (p 0,09;
+     +1,1%/ano). Com 5% os pré-coeficientes ficam quase planos de e = -5 a -2 (−0,061 a −0,042)
+     e saltam ≈ 4% entre e = -2 e -1, o que sugere expansão começando 1–2 anos antes mesmo do
+     limiar de 5% e também seleção de municípios em trajetória de crescimento. HonestDiD com 5%:
+     média e = 0…10 [0,018; 0,122], ruptura Δ^RM em Mbar 0,1 (e = 5: 0,25); Δ^SD com M = 0
+     inclui zero. A conclusão sobre o PIB não muda.
