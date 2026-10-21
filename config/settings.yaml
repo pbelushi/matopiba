@@ -202,9 +202,9 @@ analise:
   janela_evento: [-10, 10]
   n_polos: 5
   honestdid:                  # sensibilidade a violações de tendências paralelas (Rambachan e Roth 2023)
-    desfechos: [log_pib_pc]
+    desfechos: [log_pib_pc, log_luz_pc]
     janela: [-5, 10]          # e = -1 é a referência (CS com base universal)
     alvos: [media, 5]         # média de e = 0…fim e efeito em e = 5 (o efeito aparece a partir de ~5 anos)
-    mbar: [0, 0.25, 0.5, 0.75, 1, 1.5, 2]             # Δ^RM: pós ≤ Mbar × maior violação pré
+    mbar: [0, 0.05, 0.1, 0.25, 0.5, 0.75, 1, 1.5, 2]             # Δ^RM: pós ≤ Mbar × maior violação pré
     m: [0, 0.0025, 0.005, 0.0075, 0.01, 0.015, 0.02]  # Δ^SD: variação máxima da inclinação (log/ano²)
     grade: 1000               # pontos da grade de inversão do teste (padrão do R)

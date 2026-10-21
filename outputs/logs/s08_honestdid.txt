@@ -1,0 +1,88 @@
+
+=== matopiba.s08_honestdid ===
+[log_pib_pc]
+  média e = 0…10: 1204s
+  e = 5: 2248s
+[log_luz_pc]
+  média e = 0…10: 980s
+  e = 5: 1466s
+            desfecho           alvo restricao  parametro      lb     ub  inclui_zero
+  log PIB per capita média e = 0…10  original        NaN  0.0120 0.1165        False
+  log PIB per capita média e = 0…10        RM     0.0000  0.0133 0.1158        False
+  log PIB per capita média e = 0…10        RM     0.0500  0.0048 0.1265        False
+  log PIB per capita média e = 0…10        RM     0.1000 -0.0027 0.1361         True
+  log PIB per capita média e = 0…10        RM     0.2500 -0.0347 0.1734         True
+  log PIB per capita média e = 0…10        RM     0.5000 -0.1030 0.2471         True
+  log PIB per capita média e = 0…10        RM     0.7500 -0.1788 0.3229         True
+  log PIB per capita média e = 0…10        RM     1.0000 -0.2588 0.4040         True
+  log PIB per capita média e = 0…10        RM     1.5000 -0.4178 0.5331         True
+  log PIB per capita média e = 0…10        RM     2.0000 -0.5331 0.5331         True
+  log PIB per capita média e = 0…10        SD     0.0000 -0.0656 0.0531         True
+  log PIB per capita média e = 0…10        SD     0.0025 -0.1308 0.1344         True
+  log PIB per capita média e = 0…10        SD     0.0050 -0.1994 0.2220         True
+  log PIB per capita média e = 0…10        SD     0.0075 -0.2771 0.2928         True
+  log PIB per capita média e = 0…10        SD     0.0100 -0.3544 0.3595         True
+  log PIB per capita média e = 0…10        SD     0.0150 -0.4911 0.5043         True
+  log PIB per capita média e = 0…10        SD     0.0200 -0.6263 0.6482         True
+  log PIB per capita          e = 5  original        NaN  0.0139 0.1454        False
+  log PIB per capita          e = 5        RM     0.0000  0.0154 0.1444        False
+  log PIB per capita          e = 5        RM     0.0500  0.0060 0.1551        False
+  log PIB per capita          e = 5        RM     0.1000 -0.0020 0.1645         True
+  log PIB per capita          e = 5        RM     0.2500 -0.0342 0.1981         True
+  log PIB per capita          e = 5        RM     0.5000 -0.0987 0.2666         True
+  log PIB per capita          e = 5        RM     0.7500 -0.1726 0.3404         True
+  log PIB per capita          e = 5        RM     1.0000 -0.2491 0.4183         True
+  log PIB per capita          e = 5        RM     1.5000 -0.4075 0.5767         True
+  log PIB per capita          e = 5        RM     2.0000 -0.5660 0.6707         True
+  log PIB per capita          e = 5        SD     0.0000 -0.0539 0.0911         True
+  log PIB per capita          e = 5        SD     0.0025 -0.1033 0.1595         True
+  log PIB per capita          e = 5        SD     0.0050 -0.1618 0.2313         True
+  log PIB per capita          e = 5        SD     0.0075 -0.2290 0.2882         True
+  log PIB per capita          e = 5        SD     0.0100 -0.2949 0.3413         True
+  log PIB per capita          e = 5        SD     0.0150 -0.4060 0.4591         True
+  log PIB per capita          e = 5        SD     0.0200 -0.5134 0.5777         True
+log luzes per capita média e = 0…10  original        NaN -0.0029 0.0801         True
+log luzes per capita média e = 0…10        RM     0.0000 -0.0013 0.0792         True
+log luzes per capita média e = 0…10        RM     0.0500 -0.0106 0.0911         True
+log luzes per capita média e = 0…10        RM     0.1000 -0.0216 0.1064         True
+log luzes per capita média e = 0…10        RM     0.2500 -0.0691 0.1606         True
+log luzes per capita média e = 0…10        RM     0.5000 -0.1665 0.2614         True
+log luzes per capita média e = 0…10        RM     0.7500 -0.2682 0.3631         True
+log luzes per capita média e = 0…10        RM     1.0000 -0.3708 0.4233         True
+log luzes per capita média e = 0…10        RM     1.5000 -0.4233 0.4233         True
+log luzes per capita média e = 0…10        RM     2.0000 -0.4233 0.4233         True
+log luzes per capita média e = 0…10        SD     0.0000 -0.1007 0.0640         True
+log luzes per capita média e = 0…10        SD     0.0025 -0.1478 0.1546         True
+log luzes per capita média e = 0…10        SD     0.0050 -0.1938 0.2601         True
+log luzes per capita média e = 0…10        SD     0.0075 -0.2561 0.3404         True
+log luzes per capita média e = 0…10        SD     0.0100 -0.3221 0.4160         True
+log luzes per capita média e = 0…10        SD     0.0150 -0.4510 0.5674         True
+log luzes per capita média e = 0…10        SD     0.0200 -0.5751 0.7192         True
+log luzes per capita          e = 5  original        NaN -0.0134 0.0940         True
+log luzes per capita          e = 5        RM     0.0000 -0.0126 0.0927         True
+log luzes per capita          e = 5        RM     0.0500 -0.0203 0.1048         True
+log luzes per capita          e = 5        RM     0.1000 -0.0313 0.1179         True
+log luzes per capita          e = 5        RM     0.2500 -0.0740 0.1684         True
+log luzes per capita          e = 5        RM     0.5000 -0.1684 0.2671         True
+log luzes per capita          e = 5        RM     0.7500 -0.2682 0.3669         True
+log luzes per capita          e = 5        RM     1.0000 -0.3702 0.4700         True
+log luzes per capita          e = 5        RM     1.5000 -0.5479 0.5479         True
+log luzes per capita          e = 5        RM     2.0000 -0.5479 0.5479         True
+log luzes per capita          e = 5        SD     0.0000 -0.1104 0.0731         True
+log luzes per capita          e = 5        SD     0.0025 -0.1391 0.1503         True
+log luzes per capita          e = 5        SD     0.0050 -0.1790 0.2329         True
+log luzes per capita          e = 5        SD     0.0075 -0.2276 0.3027         True
+log luzes per capita          e = 5        SD     0.0100 -0.2768 0.3705         True
+log luzes per capita          e = 5        SD     0.0150 -0.3797 0.4980         True
+log luzes per capita          e = 5        SD     0.0200 -0.4771 0.6264         True
+
+Ruptura (menor valor da grade com IC incluindo zero):
+          alvo restricao ruptura             desfecho
+         e = 5        RM     0.1   log PIB per capita
+         e = 5        SD       0   log PIB per capita
+média e = 0…10        RM     0.1   log PIB per capita
+média e = 0…10        SD       0   log PIB per capita
+         e = 5        RM       0 log luzes per capita
+         e = 5        SD       0 log luzes per capita
+média e = 0…10        RM       0 log luzes per capita
+média e = 0…10        SD       0 log luzes per capita

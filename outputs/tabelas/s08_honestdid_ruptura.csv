@@ -1,5 +1,9 @@
 alvo,restricao,ruptura,desfecho
-e = 5,RM,0.25,log PIB per capita
+e = 5,RM,0.1,log PIB per capita
 e = 5,SD,0,log PIB per capita
-média e = 0…10,RM,0.25,log PIB per capita
+média e = 0…10,RM,0.1,log PIB per capita
 média e = 0…10,SD,0,log PIB per capita
+e = 5,RM,0,log luzes per capita
+e = 5,SD,0,log luzes per capita
+média e = 0…10,RM,0,log luzes per capita
+média e = 0…10,SD,0,log luzes per capita

@@ -191,3 +191,14 @@ Formato: data — decisão — motivo — alternativas consideradas.
   tendência que já existia antes. O ATT do PIB fica como não robusto; as luzes, sem
   pré-tendência, seguem como a evidência principal de efeito sobre atividade. (Mbar = 2 na
   média e = 0…10 bate no limite da grade, ±0,533; não muda a conclusão.)
+- 2026-10-21 — HonestDiD estendido às luzes per capita (mesma janela e = -5…10, grade de Mbar
+  com 0,05 e 0,10). PIB: ruptura em Δ^RM entre Mbar 0,05 e 0,10 (e = 5: [0,006; 0,155] com
+  0,05 e [−0,002; 0,165] com 0,10), Δ^SD já em M = 0. Luzes: o efeito é estável em ≈ +0,04 de
+  e = 2 em diante e não há pré-tendência sistemática, mas na janela de 10 anos nem o IC
+  convencional exclui zero (média e = 0…10: +0,039, [−0,003; 0,080]; e = 5: [−0,013; 0,094]).
+  Portanto, nenhuma restrição precisa ser relaxada para o IC incluir zero, e a ruptura é 0 em
+  Δ^RM e Δ^SD. O ATT agregado das luzes (+0,070**, s08_did) vem dos horizontes longos
+  (e > 10, coortes antigas da série DMSP), que o HonestDiD com e ≤ 10 não cobre. Leitura
+  revisada: nos primeiros 10 anos, nem PIB nem luzes têm efeito robusto a violações de
+  tendências paralelas; o efeito nas luzes é o mais limpo (sem pré-tendência) e só se torna
+  significativo no longo prazo. Tempo: 99 min para os dois desfechos.
