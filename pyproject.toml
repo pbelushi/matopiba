@@ -30,6 +30,11 @@ dev = [
     "pytest",
     "ruff",
 ]
+# HonestDiD (s08_honestdid): ambiente separado, pois o pacote exige numpy < 2.4
+honestdid = [
+    "honestdid==0.1.1",
+    "numpy<2.4",
+]
 
 [build-system]
 requires = ["hatchling"]

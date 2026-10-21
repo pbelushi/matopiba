@@ -80,6 +80,23 @@ Com `make`: `make all`, `make etapa3`, `make analise` etc. (o Makefile chama o m
 O tempo de cada etapa vai para `outputs/logs/tempos.csv`; o aceite de cada etapa, para
 `outputs/logs/`.
 
+### Opcional: HonestDiD (sensibilidade a tendências paralelas)
+
+`s08_honestdid` usa o pacote `honestdid` (port Python do HonestDiD do R), que exige
+`numpy < 2.4` e PyTorch. Por isso roda em um ambiente separado, fora do `all`:
+
+```
+python -m venv %USERPROFILE%\.venvs\matopiba_honestdid
+python -m uv pip install --native-tls --python %USERPROFILE%\.venvs\matopiba_honestdid\Scripts\python.exe ^
+    -r requirements.lock honestdid==0.1.1 --override overrides_honestdid.txt ^
+    --index-strategy unsafe-best-match --extra-index-url https://download.pytorch.org/whl/cpu
+python -m uv pip install --python %USERPROFILE%\.venvs\matopiba_honestdid\Scripts\python.exe --no-deps -e .
+make honestdid PY_HD=%USERPROFILE%\.venvs\matopiba_honestdid\Scripts\python.exe
+```
+
+Cerca de 10 minutos (PIB per capita). Validação do port contra o README do pacote R em
+`docs/DECISOES.md`.
+
 ### Custos e tempos
 
 - **BigQuery (Base dos Dados):** cerca de 200 GB processados na Etapa 5 (dentro da franquia

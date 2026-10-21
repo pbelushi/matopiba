@@ -124,15 +124,16 @@ def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "uni
         return {"gt": gt, "evento": pd.DataFrame(), "simples": {}}
     gt["ep"] = [_ep_cluster(ifs[(r.coorte, r.ano)], clusters, n) for r in gt.itertuples()]
 
-    def agrega(sel: pd.DataFrame) -> tuple[float, float]:
+    def agrega(sel: pd.DataFrame, com_if: bool = False):
         pesos = sel["n_tratados"] / sel["n_tratados"].sum()
         inf = sum(pw * ifs[(r.coorte, r.ano)] for pw, r in zip(pesos, sel.itertuples(),
                                                                  strict=True))
-        return float((pesos * sel["att"]).sum()), _ep_cluster(inf, clusters, n)
+        res = float((pesos * sel["att"]).sum()), _ep_cluster(inf, clusters, n)
+        return (*res, inf) if com_if else res
 
-    ev = []
+    ev, ifs_e = [], {}
     for e, sel in gt.groupby("e"):
-        att, ep = agrega(sel)
+        att, ep, ifs_e[int(e)] = agrega(sel, com_if=True)
         ev.append({"e": int(e), "att": att, "ep": ep, "n_coortes": len(sel)})
     evento = pd.DataFrame(ev)
     att, ep = agrega(gt[gt["e"] >= 0])
@@ -141,7 +142,16 @@ def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "uni
                "n_unidades_tratadas": int((~nunca).sum()), "n_controles": int(nunca.sum()),
                "n_coortes": int(g_all.nunique()), "anos": f"{anos[0]}–{anos[-1]}",
                "pre_media": float(pre["att"].mean()) if len(pre) else np.nan}
-    return {"gt": gt, "evento": evento, "simples": simples}
+    # covariância clusterizada entre os coeficientes do event study (para o HonestDiD)
+    vcov = pd.DataFrame(_vcov_cluster(np.column_stack(list(ifs_e.values())), clusters, n),
+                        index=list(ifs_e), columns=list(ifs_e))
+    return {"gt": gt, "evento": evento, "simples": simples, "vcov_evento": vcov}
+
+
+def _vcov_cluster(infs: np.ndarray, clusters: np.ndarray, n: int) -> np.ndarray:
+    s = pd.DataFrame(infs).groupby(clusters).sum().to_numpy()
+    g = len(s)
+    return s.T @ s * g / (g - 1) / n ** 2
 
 
 def _ep_cluster(inf: np.ndarray, clusters: np.ndarray, n: int) -> float:

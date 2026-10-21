@@ -4,7 +4,7 @@ Uso:
   python -m matopiba.tarefas <alvo> [<alvo> ...]
   python -m matopiba.tarefas lista
 
-Alvos: etapa0 … etapa7, analise (= todos os s08), testes, all. Cada alvo grava o tempo em
+Alvos: etapa0 … etapa7, analise (= os s08 exceto HonestDiD), testes, all, honestdid. Cada alvo grava o tempo em
 outputs/logs/tempos.csv.
 """
 
@@ -30,6 +30,8 @@ ALVOS: dict[str, list[str]] = {
                 "matopiba.s08_censos", "matopiba.s08_heterogeneidade", "matopiba.s08_robustez"],
 }
 ALVOS["all"] = [m for k in [f"etapa{i}" for i in range(8)] + ["analise"] for m in ALVOS[k]]
+# fora do "all": roda no ambiente opcional do HonestDiD (numpy < 2.4; ver README)
+ALVOS["honestdid"] = ["matopiba.s08_honestdid"]
 
 
 def rodar_modulo(mod: str) -> float:
