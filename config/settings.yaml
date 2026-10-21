@@ -1,0 +1,203 @@
+# Configuração central do pipeline.
+# Os IDs de projeto podem ser sobrescritos pelas variáveis de ambiente
+# MATOPIBA_GEE_PROJECT e MATOPIBA_BILLING_PROJECT.
+
+gcp:
+  # Projeto do Google Cloud com a API do Earth Engine habilitada
+  gee_project: "matopiba-512215"
+  # Projeto de billing usado nas consultas ao Base dos Dados (BigQuery)
+  billing_project: "matopiba-512215"
+
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  figuras: outputs/figuras
+  tabelas: outputs/tabelas
+  logs: outputs/logs
+
+periodo:
+  ano_inicio: 1985
+  ano_fim: null  # null = último ano disponível em cada fonte
+
+# Definições de tratamento (Etapa 7)
+tratamento:
+  continuo: share_agri_temp
+  # variáveis para as quais se definem tratamento escalonado e intensidade (soja = tratamento
+  # instrumentado, ver Etapa 6)
+  variaveis: [share_agri_temp, share_soja]
+  anos_censo: [1991, 2000, 2010, 2022]
+  limiar_padrao: 0.10
+  limiares_sensibilidade: [0.05, 0.20]
+  intensidade_ano_base: 2000
+
+monetario:
+  deflator: IPCA
+  ano_base: 2023  # último ano do PIB municipal; reais constantes de 2023 (IPCA médio anual)
+
+# Projeção de área igual para cálculos de área (Albers, parâmetros do IBGE, SIRGAS 2000)
+crs_area: "+proj=aea +lat_0=-12 +lon_0=-54 +lat_1=-2 +lat_2=-22 +ellps=GRS80 +units=m +no_defs"
+
+# Etapa 1 — universo de análise
+universo:
+  ano_malha: 2024  # mesma malha usada nas estatísticas do MapBiomas Coleção 11
+  ano_biomas: 2025
+  # Lista oficial (Portaria MAPA 244/2015), publicada pelo IBGE
+  matopiba_url: https://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/MATOPIBA/2021/MATOPIBA_2021.xls
+  matopiba_arquivo: ibge_matopiba/MATOPIBA_2021.xls
+  # Embrapa/GITE, Nota Técnica 2 (2014), tabela "Área do MATOPIBA"
+  matopiba_area_oficial_ha: 73173484.58
+  matopiba_n_municipios: 337
+  # grupo cerrado_fora: fora do Matopiba e cerrado_share >= este limiar
+  cerrado_share_min: 0.5
+  # AMC: Ehrl (2017) 1991–2010 via geobr, estendida para municípios criados depois de 2010.
+  # Uma AMC só é ligada a um município novo se a sobreposição for >= este share (evita lascas)
+  amc_ano_inicio: 1991
+  amc_ano_fim: 2010
+  amc_overlap_min: 0.01
+
+# Etapa 2 — MapBiomas (uso e cobertura)
+mapbiomas:
+  colecao: 11
+  anos: [1985, 2025]
+  cobertura_url: https://drive.usercontent.google.com/download?id=1otOqymHuixvkRGVl65zTTNyfaHo46Gqk&export=download&confirm=t
+  cobertura_arquivo: mapbiomas_c11/coverage/MAPBIOMAS_BRAZIL-COL.11-BIOME_STATE_MUNICIPALITY.xlsx
+  desmatamento_url: https://brasil.mapbiomas.org/wp-content/uploads/sites/3/2026/10/MAPBIOMAS-BRAZIL-DEFORESTATION-ANNUAL-MUNICIPALITY-COLLECTION_11.xlsx
+  desmatamento_arquivo: mapbiomas_c11/deforestation_annual_municipality_col11.xlsx
+  ee_asset: projects/mapbiomas-public/assets/brazil/lulc/collection11/mapbiomas_brazil_collection11_coverage_v3
+  # Códigos da legenda da Coleção 11 (legend_code_mapbiomas_brazil_collection_11.csv)
+  classes:
+    soja: [39]
+    outras_temp: [41]
+    algodao: [62]
+    arroz: [40]
+    cana: [20]
+    perenes: [35, 46, 47, 48]
+    pasto: [15]
+    mosaico: [21]
+    silvicultura: [9]
+    florestal: [3]
+    savanica: [4]
+    campestre: [12]
+    urbano: [24]
+    agua: [31, 33]
+  # Agregados derivados
+  agri_temp: [39, 40, 41, 62]   # soja + arroz + outras temporárias + algodão (arroz incluído a pedido do usuário)
+  # Vegetação nativa = níveis 1 "Floresta" e "Vegetação herbácea e arbustiva" do MapBiomas
+  # (13 é o código antigo de 77 — o asset v3 traz class_remap 13->77)
+  nativa: [3, 4, 5, 6, 7, 49, 11, 12, 13, 77, 32, 29, 50, 84]
+  validacao:
+    n_municipios: 10
+    anos: [2000, 2012, 2025]
+    semente: 42
+    tolerancia: 0.03
+  tolerancia_soma_area: 0.02
+
+# Etapa 3 — luzes noturnas (Earth Engine)
+luzes:
+  produtos:
+    li_dmsp:  # Li et al. (2020), Sci. Data 7:168 — DMSP intercalibrado (parte 1992–2013)
+      id: projects/sat-io/open-datasets/Harmonized_NTL/dmsp
+      banda: b1
+      anos: [1992, 2013]
+    chen:   # robustez: Chen et al. (2021), NPP-VIIRS-like, ESSD 13:889–906 (quebra em 2011–13)
+      id: projects/sat-io/open-datasets/npp-viirs-ntl
+      banda: b1
+      anos: [2000, 2024]
+    dmsp:
+      id: NOAA/DMSP-OLS/NIGHTTIME_LIGHTS
+      banda: stable_lights   # já exclui luzes efêmeras (fogo)
+      anos: [1992, 2013]
+    viirs:
+      id: NOAA/VIIRS/DNB/ANNUAL_V21
+      ids_extra: [NOAA/VIIRS/DNB/ANNUAL_V22]
+      banda: average_masked  # já mascara ruído de fundo, fogo e outliers
+      anos: [2013, 2025]
+  ano_sobreposicao: 2013
+  ano_encadeamento: 2013
+  ano_mascara_agua: 2020
+  simplificar_m: 100
+  lote_bytes: 4000000   # tamanho máximo do GeoJSON por requisição (limite do EE: 10 MB)
+
+# Etapa 4 — área construída
+construido:
+  ee_id: GOOGLE/Research/open-buildings-temporal/v1
+  anos: [2016, 2023]
+  # Métricas que não dependem da escala (somas de médias): contagem e área "suave"
+  # (presença × área). Validado contra 4 m; altura e área por limiar foram descartadas.
+  escala_m: 100
+  grupos: [matopiba, cerrado_fora]   # Open Buildings só nos grupos de análise (custo em EECU)
+  pasta_assets: matopiba  # projects/<gee_project>/assets/matopiba
+  simplificar_m: 10
+  lote_bytes: 4000000
+  salto_max: 0.5          # aponta variações anuais > 50%
+  salto_base_min:         # ignora bases muito pequenas no ano anterior
+    area_ha: 10
+    n: 200
+  validacao:
+    n_municipios: 8
+    ano: 2023
+    semente: 1
+
+# Etapa 5 — indicadores socioeconômicos
+socio:
+  max_gb_padrao: 3          # limite de GB por consulta (dry run antes de cada uma)
+  max_gb_rais: 120
+  max_gb_transferencias: 120
+  max_gb_censo: 5
+  saude_anos: [1996, 2025]
+  saude_ano_preliminar: 2025  # SIM/SINASC ainda não consolidados
+  tmi_nv_min: 50              # abaixo disso a taxa de mortalidade infantil é instável
+  sidra_renda_2022:
+    tabela: 10295
+    variaveis: {renda_dom_pc_media: 13431, renda_dom_pc_mediana: 13534}
+    classificacoes: [2, 86, 58]
+  sidra_censo_agro:
+    "2006": {tabela: 837, classificacoes_total: [12517, 218, 12568]}
+    "2017": {tabela: 6754, classificacoes_total: [829, 221, 12517]}
+  cpt_arquivo: cpt/conflitos_municipio_ano.csv
+  rais_ano_valores: 1999      # remuneração em R$ no BD só a partir de 1999
+  inep_ideb:                  # planilhas do INEP (completam anos ausentes no BD, ex.: 2015)
+    iniciais:
+      url: https://download.inep.gov.br/ideb/resultados/divulgacao_anos_iniciais_municipios_2023.zip
+      arquivo: inep_ideb/ideb_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023.xlsx
+    finais:
+      url: https://download.inep.gov.br/ideb/resultados/divulgacao_anos_finais_municipios_2023.zip
+      arquivo: inep_ideb/ideb_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx
+
+# Etapa 6 — instrumento (potencial agronômico × preço)
+instrumento:
+  gaez:
+    # FAO-GAEZ v4, Tema 4 (aptidão e rendimento atingível), clima CRU TS 3.2, 1981–2010,
+    # soja de sequeiro; grade de 5' (~9 km); rendimento em kg/ha de peso seco
+    url_base: https://s3.eu-west-1.amazonaws.com/data.gaezdev.aws.fao.org/res05/CRUTS32/Hist
+    nodata: -9
+    rasters:
+      yl_alto:   {caminho: 8110H/ylHr_soy.tif, limiar: 2000}   # alto insumo
+      yl_baixo:  {caminho: 8110L/ylLr_soy.tif, limiar: 500}    # baixo insumo
+      apt_alto:  {caminho: 8110H/suHr_soy.tif, limiar: 5500, escala: 0.0001}  # índice 0–1; >= 0,55 = "boa" ou melhor
+  potencial_principal: yl_alto
+  potencial_alternativo: yl_baixo
+  preco:
+    url: https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Annual.xlsx
+    arquivo: worldbank_pinksheet/CMO-Historical-Data-Annual.xlsx
+    coluna: Soybeans ($/mt)
+  grupos_primeiro_estagio: [matopiba, cerrado_fora]
+  # Escolha do usuário (B + C): ganho tecnológico à la Bustos, Caprettini e Ponticelli (2016)
+  instrumento_principal: z_bcp_pos     # (alto − baixo insumo, t/ha) × pós-liberação da soja GM
+  tratamento_principal: share_soja
+  bcp:
+    ano_pos: 2003                      # MP 113/2003: primeira liberação da soja transgênica
+    anos_censo: [2000, 2010, 2022]     # diferenças longas
+
+# Etapa 8 — análise
+analise:
+  grupos: [matopiba, cerrado_fora]   # tratados e controles nunca tratados dessa amostra
+  desfechos:
+    - {nome: log_pib_pc, coluna: pib_pc_real, rotulo: "log PIB per capita", anos: [2002, 2023], log: true}
+    - {nome: log_luz_pc, coluna: luz_pc, rotulo: "log luzes per capita", anos: [1992, 2025], log: true}
+    - {nome: log_emprego_pc, coluna: vinculos_pc, rotulo: "log emprego formal per capita", anos: [1995, 2025], log: true}
+    - {nome: tmi, coluna: tmi, rotulo: "Mortalidade infantil (por mil)", anos: [2000, 2024]}
+    - {nome: ideb_iniciais, coluna: ideb_iniciais, rotulo: "IDEB anos iniciais", anos: [2005, 2025], so_anos_impares: true}
+  janela_evento: [-10, 10]
+  n_polos: 5

@@ -1,0 +1,39 @@
+# Dados brutos e intermediários (regeneráveis)
+data/raw/*
+data/interim/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+
+# Credenciais
+*.json
+credentials*
+*service-account*
+*.pem
+*.key
+.env
+.env.*
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.idea/
+
+# backup da Etapa 9
+data/_backup*/
+
+# painéis grandes (o GitHub recusa arquivos > 100 MB); regenerar com `make all`
+data/processed/painel_municipio.parquet
+data/processed/painel_amc.parquet

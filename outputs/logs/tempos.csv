@@ -1,0 +1,17 @@
+quando,alvo,modulo,segundos
+2026-10-20T22:26:56,all,matopiba.s00_check_auth,22
+2026-10-20T22:31:30,all,matopiba.s01_universo,274
+2026-10-20T22:32:50,all,matopiba.s02_mapbiomas,80
+2026-10-20T23:04:49,all,matopiba.s03_luzes,1919
+2026-10-20T23:06:51,all,matopiba.s04_construido,122
+2026-10-20T23:15:21,etapa5,matopiba.s05_socio,410
+2026-10-20T23:19:04,etapa6,matopiba.s06_instrumento,224
+2026-10-20T23:19:15,etapa7,matopiba.s07_paineis,11
+2026-10-20T23:20:00,testes,pytest,45
+2026-10-20T23:21:23,analise,matopiba.s08_descritiva,83
+2026-10-20T23:21:31,analise,matopiba.s08_did,9
+2026-10-20T23:23:43,analise,matopiba.s08_iv,131
+2026-10-20T23:24:07,analise,matopiba.s08_censos,24
+2026-10-20T23:24:13,analise,matopiba.s08_heterogeneidade,6
+2026-10-20T23:24:30,analise,matopiba.s08_robustez,17
+2026-10-20T23:25:14,testes,pytest,44
