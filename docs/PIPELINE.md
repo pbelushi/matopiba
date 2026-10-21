@@ -10,5 +10,5 @@
 | 5 Socioeconômicos | `s05_socio.py` | `data/interim/socio_*.parquet` | concluída (aceite ok; CPT pendente) |
 | 6 Instrumento | `s06_instrumento.py` | `data/interim/instrumento.parquet` | concluída (aceite ok; instrumento BCP, forte em diferenças longas) |
 | 7 Painéis | `s07_paineis.py` | `data/processed/painel_*.parquet` | concluída (13 testes ok) |
-| 8 Análise | `s08_*.py`, `tarefas.py` | `outputs/tabelas`, `outputs/figuras` | concluída (`python -m matopiba.tarefas analise`) |
+| 8 Análise | `s08_*.py`, `tarefas.py` | `outputs/tabelas`, `outputs/figuras` | concluída (`python -m matopiba.tarefas analise`; HonestDiD: `make honestdid`, ambiente opcional) |
 | 9 Reprodutibilidade | `Makefile`, `tarefas.py`, `README.md` | `outputs/logs/tempos.csv`, `etapa9_reproducao.md` | concluída (execução limpa em 57 min; saídas idênticas) |

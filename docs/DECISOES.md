@@ -172,3 +172,22 @@ Formato: data — decisão — motivo — alternativas consideradas.
   tocam um polo, nunca tratados, com a coorte do polo adjacente (transbordamento).
 - 2026-10-20 — `make analise` ⇒ `python -m matopiba.tarefas analise` (não há `make` na
   máquina); tempos em `outputs/logs/tempos.csv`.
+- 2026-10-21 — HonestDiD (Rambachan e Roth 2023) para o PIB per capita, `s08_honestdid`. Não
+  há R na máquina; usei o port Python `honestdid` 0.1.1 (PyPI, MIT, tradução função a função do
+  pacote R). Ele quebra com numpy ≥ 2.4 (conversão de array 1×1 em escalar), então roda num
+  ambiente à parte com numpy 2.3 (README). Validação: o exemplo do Medicaid do README do R
+  reproduz os 10 ICs (Δ^RM, Mbar 0,5–2; Δ^SD, M 0–0,05) com diferença ≤ 0,0003 depois de
+  ajustar a escala da covariância (a convenção de ajuste de amostra finita do fixest difere da
+  do linearmodels; o algoritmo do HonestDiD confere). Insumo: event study CS com base universal,
+  e = -5…10, covariância clusterizada por microrregião a partir das funções de influência
+  (`cs_did` agora devolve `vcov_evento`).
+- 2026-10-21 — Resultado do HonestDiD (PIB per capita): o efeito médio e = 0…10 é +0,064 com IC
+  convencional [0,012; 0,117] e o efeito em e = 5 é [0,014; 0,145]. A conclusão não sobrevive a
+  violações pequenas: em Δ^RM o IC inclui zero a partir de Mbar ≈ 0,1 (Mbar 0,05: [0,005;
+  0,126]; 0,10: [−0,003; 0,136]), isto é, basta a violação pós ser 10% da maior violação pré;
+  em Δ^SD o IC já inclui zero com M = 0 (extrapolar a tendência linear pré: [−0,066; 0,053]).
+  O limite superior de M compatível com os pré-períodos é 0,083, muito acima. Leitura: o
+  aumento do PIB per capita depois do cruzamento do limiar não se distingue da continuação da
+  tendência que já existia antes. O ATT do PIB fica como não robusto; as luzes, sem
+  pré-tendência, seguem como a evidência principal de efeito sobre atividade. (Mbar = 2 na
+  média e = 0…10 bate no limite da grade, ±0,533; não muda a conclusão.)
