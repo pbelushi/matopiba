@@ -200,6 +200,15 @@ def main() -> int:
     cw, ov_novos = crosswalk_amc(mun_alb)
     df = df.merge(cw[["id_municipio", "id_amc"]], on="id_municipio", how="left")
 
+    # microrregiões não são atualizadas desde 2017: município criado depois (ex.: Boa
+    # Esperança do Norte, MT) herda a mais frequente da sua região imediata
+    sem_micro = df.loc[df["id_microrregiao"].isna(), "nome"].tolist()
+    sem = df["id_microrregiao"].isna()
+    moda = (df[~sem].groupby("id_regiao_imediata")[["id_microrregiao", "nome_microrregiao"]]
+            .agg(lambda x: x.mode().iat[0]))
+    for c in ["id_microrregiao", "nome_microrregiao"]:
+        df.loc[sem, c] = df.loc[sem, "id_regiao_imediata"].map(moda[c])
+
     cols = [
         "id_municipio", "nome", "sigla_uf", "id_microrregiao", "nome_microrregiao",
         "id_regiao_imediata", "nome_regiao_imediata", "area_ha", "matopiba",
@@ -231,12 +240,12 @@ def main() -> int:
             bool(df["id_amc"].notna().all()),
         "id_municipio único": df["id_municipio"].is_unique,
     }
-    sem_micro = df.loc[df["id_microrregiao"].isna(), "nome"].tolist()
     info = [
         f"Municípios na malha {CFG['ano_malha']}: {len(df)}",
         f"Grupos: {df['grupo'].value_counts().to_dict()}",
         f"AMCs: {df['id_amc'].nunique()} (Ehrl original: {cw['id_amc_ehrl'].nunique()})",
-        f"Municípios sem microrregião: {len(sem_micro)} {sem_micro}",
+        f"Municípios sem microrregião no BD (imputada pela região imediata): "
+        f"{len(sem_micro)} {sem_micro}",
         f"Microrregiões no Matopiba: {mat['id_microrregiao'].nunique()}",
         f"cerrado_share médio no Matopiba: {mat['cerrado_share'].mean():.2f}",
         "Municípios criados após a AMC e AMCs de origem "

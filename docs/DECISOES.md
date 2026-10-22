@@ -227,3 +227,55 @@ Formato: data — decisão — motivo — alternativas consideradas.
      limiar de 5% e também seleção de municípios em trajetória de crescimento. HonestDiD com 5%:
      média e = 0…10 [0,018; 0,122], ruptura Δ^RM em Mbar 0,1 (e = 5: 0,25); Δ^SD com M = 0
      inclui zero. A conclusão sobre o PIB não muda.
+- 2026-10-22 — Etapa 4b (`s04b_urbano`), pedida pelo usuário. Máscara urbana fixa por
+  município: pixels a até 1 km (`urbano.buffer_m`) de um pixel da classe 24 do MapBiomas C11,
+  em 2000 e em 2012, a 30 m na Albers do projeto (distância isotrópica; o EE só aceita a
+  projeção em WKT1). Um pixel do buffer pertence ao município onde cai, mesmo que o pixel urbano
+  de origem seja do vizinho (efeito só na faixa de 1 km da divisa). Salva como asset de imagem,
+  e a de 2012 também vetorizada (polígonos rotulados pelo município) para limitar as leituras
+  do Open Buildings. Área: 52.672 km² (2000) e 60.142 km² (2012), contra 8.393 km² de classe 24
+  em 2012; cobre a classe 24 em todos os 1.163 municípios.
+- 2026-10-22 — Luzes dentro/fora da máscara de 2012: VIIRS anual 2013–2025 com a máscara de água
+  da Etapa 3; cada pixel de luz é ponderado pela fração da sua área dentro da máscara, então
+  dentro + fora = total (confere com a Etapa 3: mediana 0,03%, p99 1,5%). A fração da radiância
+  dentro da máscara cai de 92,5% (2013) para 79,1% (2025).
+- 2026-10-22 — Open Buildings a 4 m na máscara de 2012: n de edificações (soma de
+  building_fractional_count × 64), área construída (presença > 0,5), área "suave" e altura média
+  ponderada pela área (volume / área construída). Piloto: 10 municípios (um por decil da área da
+  máscara), 2023, 0,63 EECU-h, extrapolado pela área para ~71 EECU-h por ano. Com só 23
+  tratados com pré-períodos na série (coortes 2019–2022; as de 2024–2025 contam como nunca
+  tratadas até 2023), o usuário escolheu calcular só 2016 e 2023 e estimar diferenças longas.
+  Custo real: 384 EECU-h (192,5 + 191,2), 2,7× a estimativa: o piloto por decis subestimou o
+  custo por km². O usuário autorizou seguir (cota em 36%; teto de 72%, com alerta).
+- 2026-10-22 — Custos em EECU da Etapa 4b: máscara 11,4; polígonos ~0; área da máscara por
+  município 77,6 (reduceRegions a 30 m sobre os polígonos municipais: caro; daria para tirar dos
+  polígonos vetorizados); luzes 2,1; piloto 0,6; Open Buildings 383,7. Total 475 EECU-h. O
+  projeto soma ~1.335 EECU-h em batch.
+- 2026-10-22 — Boa Esperança do Norte (MT, criado em 2013) não tem microrregião no Base dos
+  Dados (microrregiões congeladas em 2017) e quebrava o cluster no DiD da área urbana (o único
+  desfecho com dados para ele num painel balanceado). Correção na Etapa 1: município sem
+  microrregião herda a mais frequente da sua região imediata (Alto Teles Pires, 51006).
+- 2026-10-22 — Resultados dos novos desfechos (DiD CS, limiar 10%):
+  - log área urbanizada (MapBiomas, 1985–2025): −0,044** (TWFE −0,047*). HonestDiD: média
+    e = 0…10 [−0,043; −0,008], robusto em Δ^RM até Mbar 0,25, ruptura em 0,5; Δ^SD com M = 0
+    inclui zero; pré-coeficientes conjuntamente ≠ 0 (Wald p 0,002) mas sem inclinação (−0,2%/ano).
+    Leitura: a expansão agrícola não urbaniza o próprio município; os mapas (`s04b_mapas`)
+    mostram sedes de polos sojicultores com 3–6 km² e o crescimento concentrado nas cidades de
+    serviço (Luís Eduardo Magalhães 6 → 54 km², Barreiras 13 → 37 km²).
+  - log luzes urbanas per capita (2013–2025): +0,005 (0,027), nulo; HonestDiD já inclui zero no
+    IC convencional.
+  - log luzes fora da máscara (2013–2025): +0,103* (0,054). Pré-tendência negativa (−4,8%/ano,
+    p 0,007): com Δ^SD (M = 0, extrapolar a tendência) o IC fica positivo e longe de zero (média
+    [0,131; 0,532]); com Δ^RM rompe em Mbar 0,05. Sinal de luz nova no campo (sedes de fazenda,
+    armazéns, pivôs), mas frágil.
+  - Edificações na máscara, diferenças longas 2016→2023 (`s08_edificacoes`): nº e área
+    construída sobem com Δ agricultura temporária no OLS (+0,52** e +0,56*** por unidade de
+    participação), mas não no 2SLS (F 16) nem no DiD 2×2 (49 tratados entre 2017 e 2023, ≈ 0).
+    Altura média: 2SLS +2,5 a +3,0 m por unidade de Δ soja (p < 0,05) e DiD 2×2 +0,07 a
+    +0,09 m; a altura do Open Buildings é estimada do Sentinel-2 e pode variar entre os anos de
+    imagem, então fica como indicativa.
+- 2026-10-22 — Correção no IV em painel: com efeitos fixos de município, o instrumento
+  "ganho tecnológico × pós-2003" é constante dentro do município quando o desfecho só existe
+  depois de 2003 (IDEB desde 2005, luzes VIIRS desde 2013) e não identifica nada; a tabela
+  antiga trazia números espúrios para o IDEB (1º estágio ~1e18). `iv_fe` agora devolve NaN quando
+  o instrumento residualizado não tem variação.

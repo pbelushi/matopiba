@@ -1,0 +1,227 @@
+
+=== matopiba.s08_descritiva ===
+                         variável  tratados  nunca tratados  diferença  p (Welch)  n tratados  n controles
+  Agricultura temporária (% área)     3.510           0.489      3.020      0.000         155          850
+                    Soja (% área)     1.673           0.225      1.447      0.000         155          850
+        Vegetação nativa (% área)    50.997          57.945     -6.948      0.007         155          850
+                Pastagem (% área)    40.278          32.871      7.407      0.001         155          850
+                        População 23561.123       19578.756   3982.367      0.455         154          841
+PIB per capita (R$ de 2023, 2002) 19581.026       14876.299   4704.727      0.001         155          848
+                 Luzes per capita     0.029           0.025      0.004      0.025         154          841
+     Emprego formal por habitante     0.070           0.067      0.004      0.492         152          821
+   Mortalidade infantil (por mil)    17.670          19.598     -1.928      0.286         154          841
+    Ganho tecnológico GAEZ (t/ha)     2.079           1.951      0.128      0.009         155          850
+                      IDHM (2000)     0.531           0.498      0.033      0.000         155          850
+   Renda per capita (Atlas, 2000)   365.926         291.140     74.786      0.000         155          850
+        % de pobres (Atlas, 2000)    37.387          46.492     -9.105      0.000         155          850
+      Gini da renda (Atlas, 2000)     0.569           0.552      0.017      0.006         155          850
+
+=== matopiba.s08_did ===
+  log_pib_pc: CS 0.0574** (0.0259) | TWFE 0.1117** (0.0475)
+  log_luz_pc: CS 0.0703** (0.0323) | TWFE 0.0406 (0.0517)
+  log_emprego_pc: CS -0.0410 (0.0456) | TWFE 0.0576 (0.0671)
+  tmi: CS -0.3287 (1.0256) | TWFE -0.1218 (0.5838)
+  ideb_iniciais: CS -0.0101 (0.0583) | TWFE -0.0116 (0.0557)
+  log_area_urbana: CS -0.0443** (0.0222) | TWFE -0.0473* (0.0248)
+  log_luz_urbana_pc: CS 0.0045 (0.0269) | TWFE 0.0018 (0.0312)
+  log_luz_fora: CS 0.1029* (0.0539) | TWFE 0.0497 (0.0738)
+                        desfecho      anos  CS ATT  CS ep   CS p    TWFE  TWFE ep  TWFE p  pré-tendência (média ATT e<0)  tratados  controles  coortes   amostra
+              log PIB per capita 2002–2023  0.0574 0.0259 0.0266  0.1117   0.0475  0.0186                         0.0166       140        853       20 principal
+            log luzes per capita 1992–2025  0.0703 0.0323 0.0295  0.0406   0.0517  0.4330                         0.0007       148        597       30 principal
+   log emprego formal per capita 1995–2025 -0.0410 0.0456 0.3680  0.0576   0.0671  0.3906                         0.0044       163        700       28 principal
+  Mortalidade infantil (por mil) 2000–2024 -0.3287 1.0256 0.7486 -0.1218   0.5838  0.8347                         0.1286       151        844       23 principal
+              IDEB anos iniciais 2005–2025 -0.0101 0.0583 0.8623 -0.0116   0.0557  0.8343                        -0.0066        99        632       18 principal
+ log área urbanizada (MapBiomas) 1985–2025 -0.0443 0.0222 0.0456 -0.0473   0.0248  0.0559                        -0.0028       249        845       38 principal
+    log luzes urbanas per capita 2013–2025  0.0045 0.0269 0.8674  0.0018   0.0312  0.9539                         0.0061        89        850       11 principal
+log luzes fora da máscara urbana 2013–2025  0.1029 0.0539 0.0562  0.0497   0.0738  0.5005                         0.0187        89        850       11 principal
+
+=== matopiba.s08_iv ===
+  log_pib_pc | z_bcp_pos: 2SLS -68.314 (ep 151.547), F 0.2, AR [-inf, inf]
+  log_pib_pc | z_bcp_tend: 2SLS -15.264* (ep 8.754), F 4.1, AR [-inf, -6.51]
+  log_pib_pc | z_yl_alto_l1: 2SLS -83.084 (ep 198.004), F 0.2, AR [-inf, inf]
+  log_luz_pc | z_bcp_pos: 2SLS -12.540* (ep 6.857), F 4.3, AR [-inf, -5.34]
+  log_luz_pc | z_bcp_tend: 2SLS -12.277** (ep 5.765), F 6.2, AR [-62.43, -5.65]
+  log_luz_pc | z_yl_alto_l1: 2SLS -17.081 (ep 11.467), F 2.7, AR [-inf, inf]
+  log_emprego_pc | z_bcp_pos: 2SLS -34.851* (ep 18.656), F 4.0, AR [-inf, -16.19]
+  log_emprego_pc | z_bcp_tend: 2SLS -23.097** (ep 10.147), F 6.3, AR [-111.38, -11.93]
+  log_emprego_pc | z_yl_alto_l1: 2SLS -39.287 (ep 27.266), F 2.3, AR [-inf, inf]
+  tmi | z_bcp_pos: 2SLS 84.780 (ep 173.203), F 1.0, AR [-inf, inf]
+  tmi | z_bcp_tend: 2SLS 69.293 (ep 55.407), F 4.5, AR [-2.74, inf]
+  tmi | z_yl_alto_l1: 2SLS 119.258 (ep 159.248), F 1.2, AR [-inf, inf]
+  ideb_iniciais | z_bcp_pos: 2SLS -22.750 (ep 1442313.749), F 0.0, AR [-inf, inf]
+  ideb_iniciais | z_bcp_tend: 2SLS -10.062** (ep 4.532), F 12.8, AR [-26.60, -3.26]
+  ideb_iniciais | z_yl_alto_l1: 2SLS -26.727 (ep 17.993), F 2.9, AR [-inf, inf]
+  log_area_urbana | z_bcp_pos: 2SLS -1.611 (ep 1.248), F 6.4, AR [-6.66, 1.32]
+  log_area_urbana | z_bcp_tend: 2SLS -1.371 (ep 1.076), F 8.3, AR [-4.65, 1.16]
+  log_area_urbana | z_yl_alto_l1: 2SLS -1.944 (ep 1.753), F 3.3, AR [-inf, inf]
+  log_luz_urbana_pc | z_bcp_pos: 2SLS 1.662 (ep 6.138), F 2.3, AR [-inf, inf]
+  log_luz_urbana_pc | z_bcp_tend: 2SLS -3.427** (ep 1.463), F 25.1, AR [-6.86, -0.65]
+  log_luz_urbana_pc | z_yl_alto_l1: 2SLS -284.829 (ep 3661.031), F 0.0, AR [-inf, inf]
+  log_luz_fora | z_bcp_pos: 2SLS -7.325 (ep 2696.516), F 1.4, AR [-inf, inf]
+  log_luz_fora | z_bcp_tend: 2SLS -8.562* (ep 4.631), F 25.1, AR [-20.37, -0.46]
+  log_luz_fora | z_yl_alto_l1: 2SLS 1067.552 (ep 13421.474), F 0.0, AR [-inf, inf]
+                        desfecho                   instrumento     OLS  OLS ep    1º estágio        1º ep  F efetivo  forma reduzida        FR ep     2SLS     2SLS ep  2SLS p  AR 95% inf  AR 95% sup     n  n_unidades  n_clusters
+              log PIB per capita  ganho tecnológico × pós-2003   1.117   0.259  2.000000e-03 5.000000e-03      0.213   -1.550000e-01 2.000000e-02  -68.314     151.547   0.652        -inf         inf 25543        1162         148
+              log PIB per capita ganho tecnológico × tendência   1.117   0.259  7.000000e-03 3.000000e-03      4.054   -1.060000e-01 1.600000e-02  -15.264       8.754   0.081        -inf      -6.510 25543        1162         148
+              log PIB per capita   potencial × log preço (t-1)   1.117   0.259  3.000000e-03 6.000000e-03      0.183   -2.080000e-01 3.000000e-02  -83.084     198.004   0.675        -inf         inf 25543        1162         148
+            log luzes per capita  ganho tecnológico × pós-2003  -0.138   0.268  1.200000e-02 6.000000e-03      4.338   -1.540000e-01 3.100000e-02  -12.540       6.857   0.067        -inf      -5.340 38219        1162         148
+            log luzes per capita ganho tecnológico × tendência  -0.138   0.268  8.000000e-03 3.000000e-03      6.181   -1.010000e-01 1.800000e-02  -12.277       5.765   0.033     -62.434      -5.648 38219        1162         148
+            log luzes per capita   potencial × log preço (t-1)  -0.138   0.268  1.500000e-02 9.000000e-03      2.716   -2.530000e-01 5.300000e-02  -17.081      11.467   0.136        -inf         inf 38219        1162         148
+   log emprego formal per capita  ganho tecnológico × pós-2003  -0.148   0.399  1.100000e-02 6.000000e-03      4.009   -3.940000e-01 5.600000e-02  -34.851      18.656   0.062        -inf     -16.195 35357        1162         148
+   log emprego formal per capita ganho tecnológico × tendência  -0.148   0.399  9.000000e-03 3.000000e-03      6.285   -1.980000e-01 2.500000e-02  -23.097      10.147   0.023    -111.379     -11.934 35357        1162         148
+   log emprego formal per capita   potencial × log preço (t-1)  -0.148   0.399  1.300000e-02 8.000000e-03      2.299   -4.950000e-01 7.600000e-02  -39.287      27.266   0.150        -inf         inf 35357        1162         148
+  Mortalidade infantil (por mil)  ganho tecnológico × pós-2003 -10.267   7.734  5.000000e-03 5.000000e-03      1.018    4.530000e-01 7.890000e-01   84.780     173.203   0.624        -inf         inf 29003        1162         148
+  Mortalidade infantil (por mil) ganho tecnológico × tendência -10.267   7.734  7.000000e-03 3.000000e-03      4.518    5.150000e-01 2.870000e-01   69.293      55.407   0.211      -2.736         inf 29003        1162         148
+  Mortalidade infantil (por mil)   potencial × log preço (t-1) -10.267   7.734  7.000000e-03 7.000000e-03      1.153    8.870000e-01 8.050000e-01  119.258     159.248   0.454        -inf         inf 29003        1162         148
+              IDEB anos iniciais  ganho tecnológico × pós-2003  -0.143   0.463  1.879661e+18 1.050916e+23      0.000   -4.276282e+19 1.513798e+24  -22.750 1442313.749   1.000        -inf         inf 12381        1163         148
+              IDEB anos iniciais ganho tecnológico × tendência  -0.143   0.463  1.100000e-02 3.000000e-03     12.832   -1.140000e-01 3.700000e-02  -10.062       4.532   0.026     -26.604      -3.264 12381        1163         148
+              IDEB anos iniciais   potencial × log preço (t-1)  -0.143   0.463 -5.000000e-03 3.000000e-03      2.881    1.370000e-01 5.600000e-02  -26.727      17.993   0.137        -inf         inf 12381        1163         148
+ log área urbanizada (MapBiomas)  ganho tecnológico × pós-2003  -0.235   0.172  1.600000e-02 6.000000e-03      6.374   -2.500000e-02 2.000000e-02   -1.611       1.248   0.197      -6.664       1.321 47663        1163         148
+ log área urbanizada (MapBiomas) ganho tecnológico × tendência  -0.235   0.172  8.000000e-03 3.000000e-03      8.298   -1.200000e-02 9.000000e-03   -1.371       1.076   0.203      -4.653       1.157 47663        1163         148
+ log área urbanizada (MapBiomas)   potencial × log preço (t-1)  -0.207   0.166  1.700000e-02 1.000000e-02      3.251   -3.400000e-02 2.900000e-02   -1.944       1.753   0.267        -inf         inf 46505        1163         148
+    log luzes urbanas per capita  ganho tecnológico × pós-2003  -0.514   0.310  7.440360e+11 4.862329e+11      2.342    1.236951e+12 6.886265e+12    1.662       6.138   0.787        -inf         inf 15106        1162         148
+    log luzes urbanas per capita ganho tecnológico × tendência  -0.514   0.310  2.100000e-02 4.000000e-03     25.145   -7.300000e-02 3.100000e-02   -3.427       1.463   0.019      -6.865      -0.647 15106        1162         148
+    log luzes urbanas per capita   potencial × log preço (t-1)  -0.514   0.310  0.000000e+00 2.000000e-03      0.006   -5.400000e-02 3.200000e-02 -284.829    3661.031   0.938        -inf         inf 15106        1162         148
+log luzes fora da máscara urbana  ganho tecnológico × pós-2003  -0.138   0.545  5.723044e+11 4.843814e+11      1.396   -4.191888e+12 1.080796e+13   -7.325    2696.516   0.998        -inf         inf 15119        1163         148
+log luzes fora da máscara urbana ganho tecnológico × tendência  -0.138   0.545  2.100000e-02 4.000000e-03     25.136   -1.830000e-01 9.000000e-02   -8.562       4.631   0.065     -20.372      -0.457 15119        1163         148
+log luzes fora da máscara urbana   potencial × log preço (t-1)  -0.138   0.545  0.000000e+00 2.000000e-03      0.006    2.100000e-01 4.900000e-02 1067.552   13421.474   0.937        -inf         inf 15119        1163         148
+
+=== matopiba.s08_censos ===
+  aviso: dry run sem estimativa de bytes (view); seguindo
+  2000-2010 idhm ctrl=False: 2SLS -2.619 (F 1.7) | OLS agri -0.038
+  2000-2010 idhm ctrl=True: 2SLS -0.541 (F 0.7) | OLS agri 0.005
+  2000-2010 idhm_e ctrl=False: 2SLS -3.825 (F 1.7) | OLS agri -0.021
+  2000-2010 idhm_e ctrl=True: 2SLS -1.524 (F 1.1) | OLS agri 0.019
+  2000-2010 idhm_l ctrl=False: 2SLS -1.044 (F 1.7) | OLS agri -0.024
+  2000-2010 idhm_l ctrl=True: 2SLS 0.415 (F 1.0) | OLS agri 0.003
+  2000-2010 idhm_r ctrl=False: 2SLS -1.175 (F 1.7) | OLS agri -0.059***
+  2000-2010 idhm_r ctrl=True: 2SLS 1.428 (F 0.3) | OLS agri -0.017
+  2000-2010 indice_gini ctrl=False: 2SLS -0.987 (F 1.7) | OLS agri -0.054
+  2000-2010 indice_gini ctrl=True: 2SLS -0.717 (F 1.6) | OLS agri 0.035
+  2000-2010 prop_pobreza ctrl=False: 2SLS 511.134 (F 1.7) | OLS agri 10.810*
+  2000-2010 prop_pobreza ctrl=True: 2SLS -173.192 (F 0.8) | OLS agri 1.212
+  2000-2010 log_renda ctrl=False: 2SLS -7.433 (F 1.7) | OLS agri -0.368***
+  2000-2010 log_renda ctrl=True: 2SLS 8.631 (F 0.3) | OLS agri -0.105
+  2000-2010 alfabetizacao ctrl=False: 2SLS -171.598 (F 1.7) | OLS agri -1.732
+  2000-2010 alfabetizacao ctrl=True: 2SLS -36.810 (F 0.4) | OLS agri 3.057**
+  2010-2022 log_renda ctrl=False: 2SLS -2.906*** (F 26.3) | OLS agri 0.007
+  2010-2022 log_renda ctrl=True: 2SLS 0.060 (F 16.8) | OLS agri 0.235**
+  2010-2022 alfabetizacao ctrl=False: 2SLS -27.434*** (F 26.3) | OLS agri -3.188*
+  2010-2022 alfabetizacao ctrl=True: 2SLS 2.618 (F 17.9) | OLS agri 2.018
+  empilhado log_renda ctrl=False: 2SLS -3.465*** (F 18.3) | OLS agri -0.272**
+  empilhado log_renda ctrl=True: 2SLS 0.158 (F 12.0) | OLS agri -0.041
+  empilhado alfabetizacao ctrl=False: 2SLS -47.026*** (F 18.3) | OLS agri -2.077
+  empilhado alfabetizacao ctrl=True: 2SLS -6.232 (F 13.2) | OLS agri 2.195**
+
+=== matopiba.s08_heterogeneidade ===
+  fundiária gini_terra: OLS 0.039 | 2SLS 1.027 (F 5.3)
+  fundiária share_area_1000ha_mais: OLS -0.017 | 2SLS 1.923 (F 3.9)
+  fundiária share_estab_menos_10ha: OLS 0.215** | 2SLS 2.664 (F 3.6)
+  emprego log_vinc_agro_pc: 0.210*** (0.070)
+  emprego log_vinc_nao_agro_pc: -0.112** (0.044)
+  emprego log_sal_agro: 0.035** (0.015)
+  emprego log_sal_nao_agro: -0.024 (0.017)
+  polos/vizinhos log_pib_pc: polos 0.366 | vizinhos 0.023
+  polos/vizinhos log_luz_pc: polos 0.320 | vizinhos 0.054
+  polos/vizinhos log_emprego_pc: polos 0.389 | vizinhos 0.432*
+  polos/vizinhos tmi: polos 9.362 | vizinhos -6.501
+  polos/vizinhos ideb_iniciais: polos 0.629 | vizinhos nan
+  polos/vizinhos log_area_urbana: polos -0.072 | vizinhos -0.153***
+  polos/vizinhos log_luz_urbana_pc: polos nan | vizinhos nan
+  polos/vizinhos log_luz_fora: polos nan | vizinhos nan
+polos: Formosa do Rio Preto, São Desidério, Baixa Grande do Ribeiro, Balsas, Barreiras
+
+=== matopiba.s08_robustez ===
+  principal (município, 10%) log_pib_pc: 0.0574**
+  principal (município, 10%) log_luz_pc: 0.0703**
+  principal (município, 10%) log_emprego_pc: -0.0410
+  principal (município, 10%) tmi: -0.3287
+  principal (município, 10%) ideb_iniciais: -0.0101
+  principal (município, 10%) log_area_urbana: -0.0443**
+  principal (município, 10%) log_luz_urbana_pc: 0.0045
+  principal (município, 10%) log_luz_fora: 0.1029*
+  AMC log_pib_pc: 0.0663***
+  AMC log_luz_pc: 0.0847***
+  AMC log_emprego_pc: -0.0099
+  AMC tmi: -1.0005
+  AMC ideb_iniciais: -0.0165
+  AMC log_area_urbana: -0.0201
+  AMC log_luz_urbana_pc: 0.0152
+  AMC log_luz_fora: 0.1211**
+  microrregião log_pib_pc: 0.1318***
+  microrregião log_luz_pc: -0.0321
+  microrregião log_emprego_pc: -0.0088
+  microrregião tmi: 0.4426***
+  microrregião ideb_iniciais: -0.0570
+  microrregião log_area_urbana: 0.0199
+  microrregião log_luz_urbana_pc: 0.0971**
+  microrregião log_luz_fora: 0.0398
+  sem os 5 maiores polos log_pib_pc: 0.0497**
+  sem os 5 maiores polos log_luz_pc: 0.0633*
+  sem os 5 maiores polos log_emprego_pc: -0.0524
+  sem os 5 maiores polos tmi: -0.6608
+  sem os 5 maiores polos ideb_iniciais: -0.0211
+  sem os 5 maiores polos log_area_urbana: -0.0436*
+  sem os 5 maiores polos log_luz_urbana_pc: 0.0045
+  sem os 5 maiores polos log_luz_fora: 0.1029*
+  limiar 5% log_pib_pc: 0.0862***
+  limiar 5% log_luz_pc: 0.0245
+  limiar 5% log_emprego_pc: -0.0135
+  limiar 5% tmi: -6.5928
+  limiar 5% ideb_iniciais: -0.0632
+  limiar 5% log_area_urbana: -0.0332
+  limiar 5% log_luz_urbana_pc: -0.0248
+  limiar 5% log_luz_fora: 0.0951
+  limiar 20% log_pib_pc: 0.0713***
+  limiar 20% log_luz_pc: 0.0640
+  limiar 20% log_emprego_pc: -0.1054***
+  limiar 20% tmi: 0.3227
+  limiar 20% ideb_iniciais: 0.0553
+  limiar 20% log_area_urbana: -0.0556*
+  limiar 20% log_luz_urbana_pc: 0.0488
+  limiar 20% log_luz_fora: -0.0027
+  placebo: tratamento antecipado em 5 anos log_pib_pc: 0.0476***
+  placebo: tratamento antecipado em 5 anos log_luz_pc: -0.0257
+  placebo: tratamento antecipado em 5 anos log_emprego_pc: 0.0157
+  placebo: tratamento antecipado em 5 anos tmi: 0.8700
+  placebo: tratamento antecipado em 5 anos ideb_iniciais: -0.0043
+  placebo: tratamento antecipado em 5 anos log_area_urbana: -0.0057
+  placebo: tratamento antecipado em 5 anos log_luz_urbana_pc: 0.0017
+  placebo: tratamento antecipado em 5 anos log_luz_fora: -0.0901
+  TWFE sem controle de migração log_pib_pc: 0.1119**
+  TWFE com migração 2000 × tendência log_pib_pc: 0.1222**
+  TWFE sem controle de migração log_luz_pc: 0.0027
+  TWFE com migração 2000 × tendência log_luz_pc: 0.0294
+  TWFE sem controle de migração log_emprego_pc: 0.0357
+  TWFE com migração 2000 × tendência log_emprego_pc: 0.0655
+  TWFE sem controle de migração tmi: -0.1218
+  TWFE com migração 2000 × tendência tmi: -0.1015
+  TWFE sem controle de migração ideb_iniciais: -0.0173
+  TWFE com migração 2000 × tendência ideb_iniciais: -0.0075
+  TWFE sem controle de migração log_area_urbana: -0.0521**
+  TWFE com migração 2000 × tendência log_area_urbana: -0.0465**
+  TWFE sem controle de migração log_luz_urbana_pc: -0.0033
+  TWFE com migração 2000 × tendência log_luz_urbana_pc: 0.0084
+  TWFE sem controle de migração log_luz_fora: 0.0635
+  TWFE com migração 2000 × tendência log_luz_fora: 0.0504
+
+=== matopiba.s08_luzes_sensor ===
+  Encadeada (principal): ATT 0.0703** (0.0323), 148 tratados
+  Li-DMSP: ATT 0.0265 (0.0306), 81 tratados
+  DMSP bruto: ATT -0.0314 (0.0316), 86 tratados
+  VIIRS: ATT 0.0144 (0.0286), 89 tratados
+  Chen (VIIRS-like): ATT 0.0399 (0.0481), 138 tratados
+                série      anos     ATT     ep      p  tratados  controles  coortes  pré Wald p (e=-5…-2)  média e=0…5  ep e=0…5  média e=6…10  ep e=6…10  média e=11…20  ep e=11…20
+Encadeada (principal) 1992–2025  0.0703 0.0323 0.0295       148        597       30                0.1202       0.0292    0.0155        0.0498     0.0314         0.1106      0.0553
+              Li-DMSP 1992–2013  0.0265 0.0306 0.3866        81        664       19                0.6438       0.0224    0.0247       -0.0194     0.0339         0.1807      0.0746
+           DMSP bruto 1992–2013 -0.0314 0.0316 0.3204        86        674       19                0.3824      -0.0087    0.0280       -0.0873     0.0375         0.0267      0.0928
+                VIIRS 2013–2025  0.0144 0.0286 0.6154        89        850       11                0.2210       0.0006    0.0205        0.0498     0.0624         0.0770      0.0767
+    Chen (VIIRS-like) 2000–2024  0.0399 0.0481 0.4076       138        681       22                0.0625       0.0103    0.0278        0.0686     0.0606         0.0702      0.0984
+
+=== matopiba.s08_edificacoes ===
+  log_n ctrl=False: 2SLS 0.149 (F 16.2) | OLS 0.520** | DiD 0.002 (49 tratados)
+  log_n ctrl=True: 2SLS 0.056 (F 15.8) | OLS 0.503** | DiD 0.001 (49 tratados)
+  log_area ctrl=False: 2SLS 0.234 (F 16.2) | OLS 0.557*** | DiD 0.009 (49 tratados)
+  log_area ctrl=True: 2SLS 0.299 (F 15.6) | OLS 0.570*** | DiD 0.010 (49 tratados)
+  altura ctrl=False: 2SLS 2.505** (F 16.2) | OLS 0.303 | DiD 0.069* (49 tratados)
+  altura ctrl=True: 2SLS 3.023** (F 17.3) | OLS 0.700 | DiD 0.085*** (49 tratados)

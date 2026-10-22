@@ -1,0 +1,15 @@
+# Etapa 4b — máscara urbana: aceite
+
+- [OK] Máscara com área > 0 em todos os 1163 municípios (2012)
+- [OK] Máscara cobre a área urbana do MapBiomas (≥ 99% da classe 24) em todos os municípios
+- [OK] Luzes: dentro + fora = total no EE (máx. |div| 2.11e-15)
+- [OK] Luzes: total ≈ viirs_soma da Etapa 3 (mediana |div| 0.03%, p99 1.50%)
+- [OK] Luzes: 1163 municípios × 13 anos
+
+## Informações
+
+- Máscara: classe [24] do MapBiomas C11, buffer 1000 m, 30 m na Albers. Área total: 2000: 52,672 km²; 2012: 60,142 km² (classe 24 em 2012: 8,393 km²).
+- Fração da radiância VIIRS dentro da máscara de 2012: 2013: 92.5%; 2019: 88.8%; 2025: 79.1%
+- EECU-h por task: ob_urbano_piloto: 0.63; mascara_urbana: 11.38; mascara_urbana_2012_poligonos: 0.00; mascara_urbana_area: 77.64; viirs_urbano: 2.05; ob_urbano_2016: 192.51; ob_urbano_2023: 191.20 (total 475.4)
+- Piloto Open Buildings (2023, 4 m, 10 municípios, 530 km² de máscara): 0.63 EECU-h. Estimativa para 60,142 km² × 2 anos: 142 EECU-h.
+- Open Buildings completo: calculado

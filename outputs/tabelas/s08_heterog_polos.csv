@@ -9,3 +9,9 @@ Mortalidade infantil (por mil),polos,9.362293656700931,0.6010968541231824,1.0706
 Mortalidade infantil (por mil),vizinhos não tratados (transbordamento),-6.501229027380187,11.589216842208284,0.5748164559627078,12.0,819.0
 IDEB anos iniciais,polos,0.6293843116137138,0.039986821299480564,8.070656623720053e-56,1.0,619.0
 IDEB anos iniciais,vizinhos não tratados (transbordamento),,,,,
+log área urbanizada (MapBiomas),polos,-0.0718485972818174,0.013502027519324927,1.0301750417854536e-07,5.0,823.0
+log área urbanizada (MapBiomas),vizinhos não tratados (transbordamento),-0.15331314772551752,0.031568657419096084,1.1947948889898601e-06,22.0,823.0
+log luzes urbanas per capita,polos,,,,,
+log luzes urbanas per capita,vizinhos não tratados (transbordamento),,,,,
+log luzes fora da máscara urbana,polos,,,,,
+log luzes fora da máscara urbana,vizinhos não tratados (transbordamento),,,,,

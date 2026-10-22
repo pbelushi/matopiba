@@ -229,6 +229,15 @@ def iv_fe(df: pd.DataFrame, y: str, x: str, z: str, fe: list[str] | None = None,
     s[cols] = s[cols].astype(float)  # tipos nulos do pandas (Float64) quebram o statsmodels
     r = _residualizar(s, cols, fe)
     cl = s["cluster"].to_numpy()
+    # instrumento absorvido pelos efeitos fixos (ex.: z = ganho × pós-2003 num desfecho que só
+    # existe depois de 2003): sem identificação, devolve NaN em vez de números espúrios
+    if r[z].var() < 1e-10 * max(s[z].var(), 1e-300):
+        nan = float("nan")
+        return {k: nan for k in ["iv_coef", "iv_ep", "iv_p", "fs_coef", "fs_ep", "F_efetivo",
+                                 "rf_coef", "rf_ep", "rf_p", "ols_coef", "ols_ep", "ar_ic_inf",
+                                 "ar_ic_sup"]} | {
+            "n": int(len(s)), "n_unidades": int(s[fe[0]].nunique()),
+            "n_clusters": int(len(np.unique(cl)))}
     exog = r[controles] if controles else None
     fs = sm.OLS(r[x], pd.concat([r[[z]], exog], axis=1) if controles else r[[z]]).fit(
         cov_type="cluster", cov_kwds={"groups": cl})

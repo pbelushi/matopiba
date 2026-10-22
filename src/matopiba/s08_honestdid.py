@@ -136,6 +136,17 @@ def ruptura(r: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(linhas)
 
 
+def _juntar(novo: pd.DataFrame, arquivo: str) -> pd.DataFrame:
+    """Novas linhas no lugar das antigas das mesmas especificações, na ordem do settings."""
+    arq = path("tabelas") / arquivo
+    if not arq.exists():
+        return novo
+    antigo = pd.read_csv(arq)
+    out = pd.concat([antigo[~antigo["spec"].isin(novo["spec"])], novo], ignore_index=True)
+    ordem = {e["nome"]: i for i, e in enumerate(HD["especificacoes"])}
+    return out.sort_values("spec", key=lambda x: x.map(ordem), kind="stable")
+
+
 def figura(sp: Spec, es: dict, r: pd.DataFrame) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.4))
     ev = es["ev"]
@@ -186,7 +197,8 @@ def figura(sp: Spec, es: dict, r: pd.DataFrame) -> None:
 def main() -> int:
     import honestdid as hd
 
-    specs = especificacoes([a for a in sys.argv[1:] if not a.startswith("-")])
+    nomes = [a for a in sys.argv[1:] if not a.startswith("-")]
+    specs, parcial = especificacoes(nomes), bool(nomes)
     p = com_luzes_por_produto(carregar())
     estudos, linhas, tarefas, pre = {}, [], [], []
     for sp in specs:
@@ -226,11 +238,14 @@ def main() -> int:
     r = r.sort_values(["_o", "alvo", "_r", "parametro"], kind="stable").drop(columns=["_o", "_r"])
     r.insert(1, "desfecho", r["spec"].map({k: v["rotulo"] for k, v in estudos.items()}))
     r.insert(2, "limiar", r["spec"].map({sp.nome: sp.limiar for sp in specs}))
+    rup, pre = ruptura(r), pd.DataFrame(pre)
+    if parcial:   # rodada só de algumas especificações: preserva as demais nas tabelas
+        r, rup, pre = (_juntar(x, arq) for x, arq in [
+            (r, "s08_honestdid.csv"), (rup, "s08_honestdid_ruptura.csv"),
+            (pre, "s08_honestdid_pretendencia.csv")])
     salvar_tabela(r, "s08_honestdid", "HonestDiD: IC 95% robustos a violações de tendências "
                   "paralelas (Δ^RM e Δ^SD), event study CS com base universal", casas=4)
-    rup = ruptura(r)
     rup.to_csv(path("tabelas") / "s08_honestdid_ruptura.csv", index=False)
-    pre = pd.DataFrame(pre)
     pre.to_csv(path("tabelas") / "s08_honestdid_pretendencia.csv", index=False)
     for sp in specs:
         figura(sp, estudos[sp.nome], r[r["spec"] == sp.nome])

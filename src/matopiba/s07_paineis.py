@@ -99,6 +99,35 @@ VARS: dict[str, V] = {
                             "fora, 2016–2023", "ha"),
     "n_edificacoes": V("Open Buildings Temporal", "soma",
                        "Contagem estimada de edificações, só Matopiba e Cerrado fora", "nº"),
+    # máscara urbana fixa (Etapa 4b; só Matopiba e Cerrado fora)
+    "area_mascara_2000_ha": V("MapBiomas C11 (Etapa 4b)", "soma",
+                              "Área da máscara urbana de 2000 (classe 24 + buffer de 1 km)",
+                              "ha"),
+    "area_mascara_2012_ha": V("MapBiomas C11 (Etapa 4b)", "soma",
+                              "Área da máscara urbana de 2012 (classe 24 + buffer de 1 km)",
+                              "ha"),
+    "viirs_urbano_soma": V("NOAA VIIRS anual (Etapa 4b)", "soma",
+                           "Radiância VIIRS dentro da máscara urbana de 2012", "nW/cm²/sr"),
+    "viirs_fora_soma": V("NOAA VIIRS anual (Etapa 4b)", "soma",
+                         "Radiância VIIRS fora da máscara urbana de 2012", "nW/cm²/sr"),
+    "luz_urbana_pc": V("VIIRS + população", "razao",
+                       "Radiância dentro da máscara urbana de 2012 por habitante",
+                       "nW/cm²/sr por hab.", num="viirs_urbano_soma", den="populacao"),
+    "n_edificacoes_urb": V("Open Buildings Temporal, 4 m (Etapa 4b)", "soma",
+                           "Edificações dentro da máscara urbana de 2012", "nº"),
+    "area_construida_urb_ha": V("Open Buildings Temporal, 4 m (Etapa 4b)", "soma",
+                                "Área construída (presença > 0,5) na máscara urbana de 2012",
+                                "ha"),
+    "area_suave_urb_ha": V("Open Buildings Temporal, 4 m (Etapa 4b)", "soma",
+                           "Área construída 'suave' (presença × área) na máscara de 2012",
+                           "ha"),
+    "volume_urb_m3": V("Open Buildings Temporal, 4 m (Etapa 4b)", "soma",
+                       "Volume construído (altura × área, presença > 0,5) na máscara de 2012",
+                       "m³"),
+    "altura_media_urb_m": V("Open Buildings Temporal, 4 m (Etapa 4b)", "razao",
+                            "Altura média das edificações na máscara de 2012 (ponderada pela "
+                            "área)", "m", num="volume_urb_m3", den="area_construida_urb_ha",
+                            mult=1e-4),
     # população e PIB
     "populacao": V("IBGE (BD br_ibge_populacao)", "soma", "População residente", "hab."),
     "pib_real": V("IBGE PIB dos Municípios", "soma", "PIB", "R$ de 2023"),
@@ -231,6 +260,9 @@ def painel_municipio(universo: pd.DataFrame) -> pd.DataFrame:
     cons = _ler("construido_mun_ano", ["id_municipio", "ano", "area_urbana_mb_ha",
                                        "area_construida_ha", "n_edificacoes"])
     p = p.merge(cons, how="left")
+    urb = _ler("urbano_mun_ano")
+    p = p.merge(urb[[c for c in urb.columns if c in VARS or c in ("id_municipio", "ano")]],
+                how="left")
     for b in ["socio_populacao", "socio_pib", "socio_rais", "socio_educacao"]:
         d = _ler(b)
         p = p.merge(d[[c for c in d.columns if c in VARS or c in ("id_municipio", "ano")]],

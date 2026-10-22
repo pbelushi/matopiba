@@ -5,7 +5,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 
 ## painel_municipio
 
-228,411 linhas × 146 colunas. Chave: `id_municipio`, `ano`
+228,411 linhas × 156 colunas. Chave: `id_municipio`, `ano`
 
 | variável | descrição | unidade | fonte | agregação AMC |
 |---|---|---|---|---|
@@ -70,6 +70,15 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `area_urbana_mb_ha` | Área urbanizada (= area_urbano_ha) | ha | MapBiomas C11 | soma |
 | `area_construida_ha` | Área construída 'suave' (presença × área), só Matopiba e Cerrado fora, 2016–2023 | ha | Open Buildings Temporal | soma |
 | `n_edificacoes` | Contagem estimada de edificações, só Matopiba e Cerrado fora | nº | Open Buildings Temporal | soma |
+| `area_mascara_2000_ha` | Área da máscara urbana de 2000 (classe 24 + buffer de 1 km) | ha | MapBiomas C11 (Etapa 4b) | soma |
+| `area_mascara_2012_ha` | Área da máscara urbana de 2012 (classe 24 + buffer de 1 km) | ha | MapBiomas C11 (Etapa 4b) | soma |
+| `viirs_urbano_soma` | Radiância VIIRS dentro da máscara urbana de 2012 | nW/cm²/sr | NOAA VIIRS anual (Etapa 4b) | soma |
+| `viirs_fora_soma` | Radiância VIIRS fora da máscara urbana de 2012 | nW/cm²/sr | NOAA VIIRS anual (Etapa 4b) | soma |
+| `n_edificacoes_urb` | Edificações dentro da máscara urbana de 2012 | nº | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `area_construida_urb_ha` | Área construída (presença > 0,5) na máscara urbana de 2012 | ha | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `area_suave_urb_ha` | Área construída 'suave' (presença × área) na máscara de 2012 | ha | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `volume_urb_m3` | Volume construído (altura × área, presença > 0,5) na máscara de 2012 | m³ | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `altura_media_urb_m` | Altura média das edificações na máscara de 2012 (ponderada pela área) | m | Open Buildings Temporal, 4 m (Etapa 4b) | razao (volume_urb_m3 / area_construida_urb_ha) |
 | `populacao` | População residente | hab. | IBGE (BD br_ibge_populacao) | soma |
 | `pib_real` | PIB | R$ de 2023 | IBGE PIB dos Municípios | soma |
 | `impostos_liquidos_real` | Impostos líquidos de subsídios | R$ de 2023 | IBGE PIB dos Municípios | soma |
@@ -124,6 +133,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `apt_alto_media` | Índice de aptidão (alto insumo) | 0–1 | FAO-GAEZ v4 | media_area |
 | `preco_soja_real_usd2010` | Preço internacional da soja | US$ de 2010/t | World Bank Pink Sheet | max |
 | `luz_pc` | Radiância por habitante (série principal) | nW/cm²/sr por hab. | luzes + população | razao (luz_soma / populacao) |
+| `luz_urbana_pc` | Radiância dentro da máscara urbana de 2012 por habitante | nW/cm²/sr por hab. | VIIRS + população | razao (viirs_urbano_soma / populacao) |
 | `share_va_agro` | Participação da agropecuária no VA | 0–1 | IBGE | razao (va_agropecuaria_real / va_real) |
 | `vinculos_pc` | Vínculos formais por habitante | nº/hab. | RAIS + população | razao (vinculos_total / populacao) |
 | `familias_por_mil_hab` | Famílias beneficiárias (média mensal) por 1.000 habitantes |  | CGU + população | razao (familias_media_mensal / populacao) |
@@ -158,7 +168,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 
 ## painel_amc
 
-176,095 linhas × 141 colunas. Chave: `id_amc`, `ano`
+176,095 linhas × 151 colunas. Chave: `id_amc`, `ano`
 
 | variável | descrição | unidade | fonte | agregação AMC |
 |---|---|---|---|---|
@@ -194,6 +204,14 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `area_urbana_mb_ha` | Área urbanizada (= area_urbano_ha) | ha | MapBiomas C11 | soma |
 | `area_construida_ha` | Área construída 'suave' (presença × área), só Matopiba e Cerrado fora, 2016–2023 | ha | Open Buildings Temporal | soma |
 | `n_edificacoes` | Contagem estimada de edificações, só Matopiba e Cerrado fora | nº | Open Buildings Temporal | soma |
+| `area_mascara_2000_ha` | Área da máscara urbana de 2000 (classe 24 + buffer de 1 km) | ha | MapBiomas C11 (Etapa 4b) | soma |
+| `area_mascara_2012_ha` | Área da máscara urbana de 2012 (classe 24 + buffer de 1 km) | ha | MapBiomas C11 (Etapa 4b) | soma |
+| `viirs_urbano_soma` | Radiância VIIRS dentro da máscara urbana de 2012 | nW/cm²/sr | NOAA VIIRS anual (Etapa 4b) | soma |
+| `viirs_fora_soma` | Radiância VIIRS fora da máscara urbana de 2012 | nW/cm²/sr | NOAA VIIRS anual (Etapa 4b) | soma |
+| `n_edificacoes_urb` | Edificações dentro da máscara urbana de 2012 | nº | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `area_construida_urb_ha` | Área construída (presença > 0,5) na máscara urbana de 2012 | ha | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `area_suave_urb_ha` | Área construída 'suave' (presença × área) na máscara de 2012 | ha | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
+| `volume_urb_m3` | Volume construído (altura × área, presença > 0,5) na máscara de 2012 | m³ | Open Buildings Temporal, 4 m (Etapa 4b) | soma |
 | `populacao` | População residente | hab. | IBGE (BD br_ibge_populacao) | soma |
 | `pib_real` | PIB | R$ de 2023 | IBGE PIB dos Municípios | soma |
 | `impostos_liquidos_real` | Impostos líquidos de subsídios | R$ de 2023 | IBGE PIB dos Municípios | soma |
@@ -259,6 +277,8 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `share_agri_temp` | Participação de agricultura temporária: soja + arroz + outras temporárias + algodão na área municipal | 0–1 | MapBiomas C11 | razao (area_agri_temp_ha / area_ha) |
 | `share_nativa` | Participação de vegetação nativa (níveis 1 e 2 do MapBiomas: floresta e vegetação herbácea e arbustiva) na área municipal | 0–1 | MapBiomas C11 | razao (area_nativa_ha / area_ha) |
 | `luz_pc` | Radiância por habitante (série principal) | nW/cm²/sr por hab. | luzes + população | razao (luz_soma / populacao) |
+| `luz_urbana_pc` | Radiância dentro da máscara urbana de 2012 por habitante | nW/cm²/sr por hab. | VIIRS + população | razao (viirs_urbano_soma / populacao) |
+| `altura_media_urb_m` | Altura média das edificações na máscara de 2012 (ponderada pela área) | m | Open Buildings Temporal, 4 m (Etapa 4b) | razao (volume_urb_m3 / area_construida_urb_ha) |
 | `pib_pc_real` | PIB per capita | R$ de 2023/hab. | IBGE | razao (pib_real / populacao) |
 | `share_va_agro` | Participação da agropecuária no VA | 0–1 | IBGE | razao (va_agropecuaria_real / va_real) |
 | `salario_medio_real_total` | Salário médio mensal — total (1999+) | R$ de 2023 | RAIS | razao (massa_salarial_real_total / vinculos_total) |

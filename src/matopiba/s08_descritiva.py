@@ -92,7 +92,7 @@ def _categoria(s: pd.DataFrame) -> pd.Series:
 
 def trajetorias(s: pd.DataFrame) -> None:
     s = s.assign(cat=_categoria(s))
-    fig, axes = plt.subplots(1, len(DESFECHOS), figsize=(17, 4.2))
+    fig, axes = plt.subplots(1, len(DESFECHOS), figsize=(3.4 * len(DESFECHOS), 4.2))
     for ax, d in zip(axes, DESFECHOS, strict=True):
         y = preparar_desfecho(s, d)
         m = s.assign(y=y).dropna(subset=["y"]).groupby(["cat", "ano"])["y"].mean()

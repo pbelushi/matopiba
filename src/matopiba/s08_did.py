@@ -64,7 +64,7 @@ ROT_EST = {"CS": "Callaway–Sant'Anna (base varying)", "TWFE": "TWFE",
 
 def figura(ev: pd.DataFrame, series: list[tuple[str, str, float]], arquivo: str,
            titulo: str, nota: str) -> None:
-    fig, axes = plt.subplots(1, len(DESFECHOS), figsize=(17, 4.2), sharex=True)
+    fig, axes = plt.subplots(1, len(DESFECHOS), figsize=(3.4 * len(DESFECHOS), 4.2), sharex=True)
     for ax, d in zip(axes, DESFECHOS, strict=True):
         for est, cor, desl in series:
             e = ev[(ev["desfecho"] == d.nome) & (ev["estimador"] == est)].sort_values("e")

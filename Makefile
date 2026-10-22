@@ -4,12 +4,12 @@ PY ?= python
 # ambiente opcional do HonestDiD (numpy < 2.4)
 PY_HD ?= $(PY)
 
-.PHONY: all etapa0 etapa1 etapa2 etapa3 etapa4 etapa5 etapa6 etapa7 analise testes lista honestdid
+.PHONY: all etapa0 etapa1 etapa2 etapa3 etapa4 etapa4b etapa5 etapa6 etapa7 analise testes lista honestdid
 
 all:
 	$(PY) -m matopiba.tarefas all testes
 
-etapa0 etapa1 etapa2 etapa3 etapa4 etapa5 etapa6 etapa7 analise testes lista:
+etapa0 etapa1 etapa2 etapa3 etapa4 etapa4b etapa5 etapa6 etapa7 analise testes lista:
 	$(PY) -m matopiba.tarefas $@
 
 honestdid:

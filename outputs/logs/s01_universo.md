@@ -12,7 +12,7 @@
 - Municípios na malha 2024: 5571
 - Grupos: {'outros': 4408, 'cerrado_fora': 826, 'matopiba': 337}
 - AMCs: 4295 (Ehrl original: 4298)
-- Municípios sem microrregião: 1 ['Boa Esperança do Norte']
+- Municípios sem microrregião no BD (imputada pela região imediata): 1 ['Boa Esperança do Norte']
 - Microrregiões no Matopiba: 31
 - cerrado_share médio no Matopiba: 0.82
 - Municípios criados após a AMC e AMCs de origem (share >= 1%):

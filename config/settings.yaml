@@ -139,6 +139,26 @@ construido:
     ano: 2023
     semente: 1
 
+# Etapa 4b — máscara urbana fixa (luzes dentro/fora e edificações urbanas)
+urbano:
+  classes: [24]               # MapBiomas C11: área urbanizada
+  anos_mascara: [2000, 2012]
+  ano_mascara_ref: 2012       # máscara usada para luzes (VIIRS 2013+) e Open Buildings
+  buffer_m: 1000              # pixels a até esta distância de um pixel urbano
+  escala_mascara_m: 30
+  grupos: [matopiba, cerrado_fora]
+  asset_mascara: mascara_urbana   # em projects/<gee_project>/assets/<construido.pasta_assets>
+  ob:
+    anos: [2016, 2023]        # cobertura do produto
+    anos_calculo: [2016, 2023]  # só as pontas, para diferenças longas (decisão de 22/10/2026)
+    escala_m: 4               # escala efetiva do Open Buildings Temporal
+    limiar_presenca: 0.5      # pixel construído se building_presence > limiar
+    confirmado: true          # piloto ok; usuário confirmou ~143 EECU-h (2 anos)
+    piloto:
+      n_municipios: 10        # um por decil da área da máscara
+      ano: 2023
+      semente: 7
+
 # Etapa 5 — indicadores socioeconômicos
 socio:
   max_gb_padrao: 3          # limite de GB por consulta (dry run antes de cada uma)
@@ -199,6 +219,9 @@ analise:
     - {nome: log_emprego_pc, coluna: vinculos_pc, rotulo: "log emprego formal per capita", anos: [1995, 2025], log: true}
     - {nome: tmi, coluna: tmi, rotulo: "Mortalidade infantil (por mil)", anos: [2000, 2024]}
     - {nome: ideb_iniciais, coluna: ideb_iniciais, rotulo: "IDEB anos iniciais", anos: [2005, 2025], so_anos_impares: true}
+    - {nome: log_area_urbana, coluna: area_urbano_ha, rotulo: "log área urbanizada (MapBiomas)", anos: [1985, 2025], log: true}
+    - {nome: log_luz_urbana_pc, coluna: luz_urbana_pc, rotulo: "log luzes urbanas per capita", anos: [2013, 2025], log: true}
+    - {nome: log_luz_fora, coluna: viirs_fora_soma, rotulo: "log luzes fora da máscara urbana", anos: [2013, 2025], log: true}
   janela_evento: [-10, 10]
   desfechos_extra:
     - {nome: log_vinc_agro_pc, coluna: vinculos_agro, por: populacao, rotulo: "log vínculos agro por hab.", anos: [1995, 2025], log: true}
@@ -224,3 +247,6 @@ analise:
       - {nome: pib_lim05, desfecho: log_pib_pc, limiar: 0.05}
       - {nome: luz_li_longo, desfecho: log_luz_li_pc, janela: [-5, 15], alvos: [media, 10]}
       - {nome: luz_chen_longo, desfecho: log_luz_chen_pc, janela: [-5, 15], alvos: [media, 10]}
+      - {nome: area_urbana, desfecho: log_area_urbana}
+      - {nome: luz_urbana, desfecho: log_luz_urbana_pc}
+      - {nome: luz_fora, desfecho: log_luz_fora}
