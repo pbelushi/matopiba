@@ -116,3 +116,15 @@ Cerca de 40 minutos para as 7 especificações de `analise.honestdid` (8 process
 ## Resultados principais
 
 Ver `outputs/tabelas/` e `outputs/figuras/`, e o resumo e as ressalvas em `docs/DECISOES.md`.
+
+## Licença
+
+- **Código** (`src/`, `tests/`, `config/`, `Makefile`, `pyproject.toml`): licença MIT, ver
+  [`LICENSE`](LICENSE).
+- **Documentação e resultados** (`docs/` e `outputs/`): [Creative Commons Atribuição 4.0
+  Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). Cite como indicado
+  em [`CITATION.cff`](CITATION.cff).
+- **Dados de terceiros** baixados ou consultados pelo pipeline (`data/`) seguem as licenças das
+  fontes listadas em [`data/SOURCES.md`](data/SOURCES.md). Atenção ao FAO-GAEZ v4 (instrumento),
+  distribuído sob CC BY-NC-SA 3.0 IGO.
+
