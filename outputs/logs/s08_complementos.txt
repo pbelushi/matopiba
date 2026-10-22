@@ -1,0 +1,29 @@
+  município | log_area_urbana: -0.0443** (0.0222), 249 tratados; pré Wald p 0.002
+  microrregião (só municípios dos grupos) | log_area_urbana: -0.0157 (0.0220), 42 tratados; pré Wald p 0.000
+  município | log_area_urbana_2000: -0.0109 (0.0101), 155 tratados; pré Wald p 0.670
+  microrregião (só municípios dos grupos) | log_area_urbana_2000: -0.0310*** (0.0078), 21 tratados; pré Wald p 0.042
+  município | log_luz_urbana_pc: 0.0045 (0.0269), 89 tratados; pré Wald p 0.539
+  microrregião (só municípios dos grupos) | log_luz_urbana_pc: 0.0929*** (0.0360), 12 tratados; pré Wald p 0.000
+  município | log_luz_fora: 0.1029* (0.0539), 89 tratados; pré Wald p 0.056
+  luzes fora da máscara, sem 2013 | log_luz_fora_sem2013: 0.1025 (0.0640), 76 tratados; pré Wald p 0.133
+  sobreposição: {'N efetivo controles': 632.6786284699353, 'maior peso controle': 0.006570803652776281} | com participação agrícola 2000: {'N efetivo controles': 63.440258315519266, 'maior peso controle': 0.06838149489146744}
+  incondicional (coortes > 2000) | log_pib_pc: 0.0574** (0.0260), 139 tratados; pré Wald p 0.070
+  condicional, covariáveis 2000 (coortes > 2000) | log_pib_pc: 0.0811*** (0.0255), 139 tratados; pré Wald p 0.009
+  condicional, covariáveis 2000 + participação agrícola 2000 | log_pib_pc: 0.1475*** (0.0313), 139 tratados; pré Wald p 0.000
+  incondicional (coortes > 2000) | log_luz_pc: 0.0630* (0.0333), 120 tratados; pré Wald p 0.002
+  condicional, covariáveis 2000 (coortes > 2000) | log_luz_pc: 0.1061*** (0.0298), 120 tratados; pré Wald p 0.000
+  condicional, covariáveis 2000 + participação agrícola 2000 | log_luz_pc: 0.1764*** (0.0329), 120 tratados; pré Wald p 0.000
+  incondicional (coortes > 2000) | log_emprego_pc: -0.0121 (0.0302), 143 tratados; pré Wald p 0.492
+  condicional, covariáveis 2000 (coortes > 2000) | log_emprego_pc: 0.0565** (0.0243), 143 tratados; pré Wald p 0.048
+  incondicional (coortes > 2000) | tmi: -0.3287 (1.0256), 151 tratados; pré Wald p 0.876
+  condicional, covariáveis 2000 (coortes > 2000) | tmi: -0.4076 (1.0472), 151 tratados; pré Wald p 0.884
+  incondicional (coortes > 2000) | ideb_iniciais: -0.0148 (0.0577), 98 tratados; pré Wald p 0.617
+  condicional, covariáveis 2000 (coortes > 2000) | ideb_iniciais: 0.0612 (0.0486), 98 tratados; pré Wald p 0.693
+  incondicional (coortes > 2000) | log_area_urbana: -0.0108 (0.0102), 154 tratados; pré Wald p 0.442
+  condicional, covariáveis 2000 (coortes > 2000) | log_area_urbana: -0.0072 (0.0105), 154 tratados; pré Wald p 0.199
+  incondicional (coortes > 2000) | log_luz_urbana_pc: 0.0020 (0.0273), 88 tratados; pré Wald p 0.680
+  condicional, covariáveis 2000 (coortes > 2000) | log_luz_urbana_pc: 0.0185 (0.0244), 88 tratados; pré Wald p 0.849
+  incondicional (coortes > 2000) | log_luz_fora: 0.1101** (0.0535), 88 tratados; pré Wald p 0.128
+  condicional, covariáveis 2000 (coortes > 2000) | log_luz_fora: 0.1163** (0.0516), 88 tratados; pré Wald p 0.703
+  PIB per capita, antecipação 2 anos (incondicional) | log_pib_pc: 0.1128*** (0.0414), 140 tratados; pré Wald p 0.150
+  PIB per capita, antecipação 2 anos (condicional, covariáveis 2000) | log_pib_pc: 0.1438*** (0.0349), 139 tratados; pré Wald p 0.054

@@ -279,3 +279,44 @@ Formato: data — decisão — motivo — alternativas consideradas.
   depois de 2003 (IDEB desde 2005, luzes VIIRS desde 2013) e não identifica nada; a tabela
   antiga trazia números espúrios para o IDEB (1º estágio ~1e18). `iv_fe` agora devolve NaN quando
   o instrumento residualizado não tem variação.
+- 2026-10-22 — `cs_did` ganhou `antecipacao` (base g-1-δ, como `anticipation` no `did` do R) e
+  `covariaveis` (DiD duplamente robusto de Sant'Anna e Zhao 2020, função de influência de
+  DRDID::drdid_panel, versão tradicional). Validação: só com intercepto reproduz o CS
+  incondicional (ATT e ep idênticos; teste em tests/test_analise.py); com uma covariável, ep
+  analítico 0,0258 contra 0,0267 no bootstrap por cluster (150 réplicas).
+- 2026-10-22 — Testes complementares (`s08_complementos`), só com dados dos painéis:
+  1. Área urbana, concentração vs. perda líquida. Município: −0,044** (1985–2025), mas
+     −0,011 (0,010) na janela 2000–2025, sem pré-tendência (Wald p 0,67). Microrregião (só
+     municípios dos grupos): −0,016 (1985–2025, pré Wald p < 0,001) e −0,031*** (2000–2025, 21
+     tratados, pré p 0,04). Coortes > 2000 no município: −0,011 (incondicional) e −0,007
+     (condicional). Leitura: o −0,044 vem das coortes antigas e do início da série do
+     MapBiomas; nas coortes recentes não há efeito municipal. O negativo na microrregião
+     2000–2025 é pouco confiável (21 tratados, pré-tendência), então o teste não separa
+     concentração de perda líquida com clareza. Luzes urbanas pc: 0,005 no município; +0,093***
+     na microrregião, mas com 12 tratados e pré-tendência forte (p < 0,001): inconclusivo.
+  2. Volume construído na máscara (Open Buildings 2016→2023): 2SLS +0,69** a +0,74**,
+     OLS +0,62***, DiD 2×2 +0,021* a +0,022**; é a métrica de edificações com sinal mais
+     consistente entre especificações. Placebo de altura fora da máscara: não feito, porque
+     fora da máscara só há Open Buildings a 100 m (Etapa 4), sem altura; calcular a 4 m custaria
+     ~35× a área da máscara (milhares de EECU-h).
+  3. Luzes fora da máscara sem 2013: ATT +0,103 (0,064), 76 tratados, pré Wald p 0,13
+     (inclinação −4,6%/ano, ep 2,3%). HonestDiD: média e = 0…10 já inclui zero no IC
+     convencional [−0,023; 0,303]; Δ^SD com M = 0 exclui zero ([0,078; 0,608]) porque
+     extrapola a pré-tendência negativa. Sem 2013 o efeito some como significância
+     convencional; a evidência de luz nova no campo depende da hipótese de tendência linear.
+  4. CS condicional (coortes > 2000; covariáveis de 2000: log população, log renda pc,
+     analfabetismo, participação de vegetação nativa, % de não naturais). A participação
+     agrícola de 2000 ficou fora da especificação principal: quase separa tratados (3,5%) e
+     controles (0,5%), N efetivo dos controles cai de 633 para 63 e as estimativas explodem
+     (PIB +0,148, luzes +0,176, ambas com pré-tendência p < 0,001). Com as 5 covariáveis:
+     PIB 0,057** → 0,081*** (pré p 0,07 → 0,009); luzes 0,063* → 0,106*** (pré p 0,002 →
+     0,0003); emprego −0,012 → +0,057** (pré p 0,49 → 0,048); TMI, IDEB, área urbana e luzes
+     urbanas seguem nulos; luzes fora 0,110** → 0,116** e a pré-tendência some (p 0,13 →
+     0,70). Condicionar nas características de 2000 não elimina as pré-tendências do PIB e
+     das luzes (piora); só as luzes fora da máscara ficam mais limpas.
+  5. PIB com antecipação de 2 anos (base g-3): +0,113*** (0,041), pré Wald p 0,15, mas a
+     inclinação pré segue +0,8%/ano (ep 0,4%); condicional +0,144*** (0,035), pré p 0,054. Os
+     pré-coeficientes sobem de forma contínua desde e = -8: a pré-tendência não é só o
+     tratamento começando 1–2 anos antes, é uma trajetória de crescimento mais longa. O ATT
+     maior com antecipação incorpora o crescimento de e = -2 e -1, que já fazia parte dessa
+     trajetória.

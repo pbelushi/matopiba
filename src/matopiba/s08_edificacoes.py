@@ -10,6 +10,10 @@ Com o Open Buildings só em 2016 e 2023 e apenas 23 tratados com pré-períodos 
   DiD 2×2    Δy de quem cruza o limiar de 10% entre 2017 e 2023 contra os nunca tratados
              até 2023 (exclui os já tratados em 2016); sem teste de pré-tendência possível
 
+Desfechos: nº de edificações, área construída, altura média e volume construído (altura ×
+área). Não há placebo de altura fora da máscara: fora dela o Open Buildings só existe a 100 m
+(Etapa 4), sem altura, e calculá-lo a 4 m custaria ~35× a área da máscara.
+
 Cada especificação sem e com o nível inicial do desfecho como controle. EF de UF; cluster por
 microrregião.
 
@@ -31,7 +35,8 @@ from matopiba.config import settings
 A0, A1 = settings()["urbano"]["ob"]["anos_calculo"]
 DESF = {"log_n": ("n_edificacoes_urb", True, "log nº de edificações (máscara urbana)"),
         "log_area": ("area_construida_urb_ha", True, "log área construída (máscara urbana)"),
-        "altura": ("altura_media_urb_m", False, "altura média, m (máscara urbana)")}
+        "altura": ("altura_media_urb_m", False, "altura média, m (máscara urbana)"),
+        "log_volume": ("volume_urb_m3", True, "log volume construído (máscara urbana)")}
 
 
 def base() -> pd.DataFrame:

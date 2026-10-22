@@ -231,6 +231,20 @@ analise:
     - {nome: log_luz_dmsp_pc, coluna: dmsp_soma, por: populacao, rotulo: "log luzes pc, DMSP bruto", anos: [1992, 2013], log: true}
     - {nome: log_luz_viirs_pc, coluna: viirs_soma, por: populacao, rotulo: "log luzes pc, VIIRS", anos: [2013, 2025], log: true}
     - {nome: log_luz_chen_pc, coluna: chen_soma, por: populacao, rotulo: "log luzes pc, Chen (VIIRS-like)", anos: [2000, 2024], log: true}
+    - {nome: log_area_urbana_2000, coluna: area_urbano_ha, rotulo: "log área urbanizada (MapBiomas, 2000–2025)", anos: [2000, 2025], log: true}
+    - {nome: log_luz_fora_sem2013, coluna: viirs_fora_soma, rotulo: "log luzes fora da máscara urbana (sem 2013)", anos: [2014, 2025], log: true}
+  complementos:               # s08_complementos
+    covariaveis_2000:         # CS condicional (duplamente robusto); só coortes > 2000
+      - log_pop_2000
+      - log_renda_pc_2000
+      - analfabetismo_2000
+      - share_nativa_2000
+      - pct_nao_natural_2000
+    # sensibilidade (PIB e luzes): + participação agrícola de 2000, que quase separa tratados
+    # (3,5%) e controles (0,5%): N efetivo de controles cai de ~630 para ~60
+    covariaveis_2000_sens: [share_agri_temp_2000]
+    desfechos_sens: [log_pib_pc, log_luz_pc]
+    antecipacao_pib: 2
   n_polos: 5
   honestdid:                  # sensibilidade a violações de tendências paralelas (Rambachan e Roth 2023)
     janela: [-5, 10]          # padrão; e = -1 é a referência (CS com base universal)
@@ -250,3 +264,4 @@ analise:
       - {nome: area_urbana, desfecho: log_area_urbana}
       - {nome: luz_urbana, desfecho: log_luz_urbana_pc}
       - {nome: luz_fora, desfecho: log_luz_fora}
+      - {nome: luz_fora_sem2013, desfecho: log_luz_fora_sem2013}

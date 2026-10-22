@@ -1,6 +1,7 @@
 """O Callaway–Sant'Anna próprio (analise.cs_did) confere com o pacote `differences`."""
 
 import numpy as np
+import pandas as pd
 import pytest
 from differences import ATTgt
 
@@ -30,3 +31,30 @@ def test_cs_confere_com_differences(amostra, desfecho):
     mine = meu["evento"].set_index("e")["att"]
     comum = mine.index.intersection(ev.index)
     assert np.allclose(mine[comum], ev[comum], atol=1e-3)
+
+
+def test_dr_so_intercepto_igual_incondicional(amostra):
+    """O DiD duplamente robusto sem covariáveis (só intercepto) é o CS incondicional."""
+    s = amostra.assign(y=preparar_desfecho(amostra, DESFECHOS[0]))
+    s = s.dropna(subset=["y"])
+    s = s[s.groupby("unidade")["ano"].transform("nunique") == s["ano"].nunique()]
+    sem = cs_did(s, "y", balancear=False)["simples"]
+    vazio = pd.DataFrame(index=s["unidade"].unique())
+    dr = cs_did(s, "y", balancear=False, covariaveis=vazio)["simples"]
+    assert np.isclose(sem["att"], dr["att"], rtol=1e-10)
+    assert np.isclose(sem["ep"], dr["ep"], rtol=1e-8)
+
+
+def test_antecipacao_desloca_a_base(amostra):
+    """Com antecipação δ, ATT(g, g) usa a base g-1-δ."""
+    s = amostra.assign(y=preparar_desfecho(amostra, DESFECHOS[0]))
+    gt = cs_did(s, "y", antecipacao=2)["gt"].set_index(["coorte", "ano"])
+    g = int(gt.index.get_level_values(0).max())
+    w = s.dropna(subset=["y"]).pivot_table(index="unidade", columns="ano", values="y")
+    info = s.drop_duplicates("unidade").set_index("unidade")["coorte"]
+    w = w.dropna()
+    dy = w[g] - w[g - 3]
+    c = info.loc[w.index]
+    # coortes depois do fim da janela contam como nunca tratadas
+    trat, nunca = c == g, c.isna() | (c > w.columns.max())
+    assert np.isclose(gt.loc[(g, g), "att"], dy[trat].mean() - dy[nunca].mean())

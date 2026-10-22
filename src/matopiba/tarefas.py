@@ -30,7 +30,8 @@ ALVOS: dict[str, list[str]] = {
     "etapa7": ["matopiba.s07_paineis"],
     "analise": ["matopiba.s08_descritiva", "matopiba.s08_did", "matopiba.s08_iv",
                 "matopiba.s08_censos", "matopiba.s08_heterogeneidade", "matopiba.s08_robustez",
-                "matopiba.s08_luzes_sensor", "matopiba.s08_edificacoes"],
+                "matopiba.s08_luzes_sensor", "matopiba.s08_edificacoes",
+                "matopiba.s08_complementos"],
 }
 ALVOS["all"] = [m for k in ["etapa0", "etapa1", "etapa2", "etapa3", "etapa4", "etapa4b",
                             "etapa5", "etapa6", "etapa7", "analise"] for m in ALVOS[k]]

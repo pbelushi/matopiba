@@ -1,0 +1,38 @@
+\begin{table}
+\caption{Testes complementares do DiD (Callaway–Sant'Anna): microrregião, janelas alternativas, CS condicional e antecipação}
+\label{tab:s08_complementos}
+\begin{tabular}{lllrrrrrrrrrrrr}
+\toprule
+teste & desfecho & anos & ATT & ep & p & tratados & controles & coortes & células (g,t) & pré Wald p & pré inclinação & pré inclinação ep & N efetivo controles & maior peso controle \\
+\midrule
+município & log área urbanizada (MapBiomas) & 1985–2025 & -0.0443 & 0.0222 & 0.0456 & 249 & 845 & 38 & 1520 & 0.0022 & -0.0022 & 0.0018 & — & — \\
+microrregião (só municípios dos grupos) & log área urbanizada (MapBiomas) & 1985–2025 & -0.0157 & 0.0220 & 0.4760 & 42 & 100 & 25 & 1000 & 0.0000 & -0.0011 & 0.0014 & — & — \\
+município & log área urbanizada (MapBiomas, 2000–2025) & 2000–2025 & -0.0109 & 0.0101 & 0.2842 & 155 & 850 & 24 & 600 & 0.6696 & 0.0002 & 0.0017 & — & — \\
+microrregião (só municípios dos grupos) & log área urbanizada (MapBiomas, 2000–2025) & 2000–2025 & -0.0310 & 0.0078 & 0.0001 & 21 & 100 & 16 & 400 & 0.0417 & -0.0018 & 0.0011 & — & — \\
+município & log luzes urbanas per capita & 2013–2025 & 0.0045 & 0.0269 & 0.8674 & 89 & 850 & 11 & 132 & 0.5388 & -0.0095 & 0.0112 & — & — \\
+microrregião (só municípios dos grupos) & log luzes urbanas per capita & 2013–2025 & 0.0929 & 0.0360 & 0.0100 & 12 & 100 & 8 & 96 & 0.0000 & 0.0236 & 0.0049 & — & — \\
+município & log luzes fora da máscara urbana & 2013–2025 & 0.1029 & 0.0539 & 0.0562 & 89 & 850 & 11 & 132 & 0.0561 & -0.0478 & 0.0178 & — & — \\
+luzes fora da máscara, sem 2013 & log luzes fora da máscara urbana (sem 2013) & 2014–2025 & 0.1025 & 0.0640 & 0.1093 & 76 & 850 & 10 & 110 & 0.1331 & -0.0464 & 0.0228 & — & — \\
+incondicional (coortes > 2000) & log PIB per capita & 2002–2023 & 0.0574 & 0.0260 & 0.0270 & 139 & 846 & 20 & 420 & 0.0701 & 0.0100 & 0.0052 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log PIB per capita & 2002–2023 & 0.0811 & 0.0255 & 0.0015 & 139 & 846 & 20 & 420 & 0.0093 & 0.0130 & 0.0052 & 632.6786 & 0.0066 \\
+condicional, covariáveis 2000 + participação agrícola 2000 & log PIB per capita & 2002–2023 & 0.1475 & 0.0313 & 0.0000 & 139 & 846 & 20 & 420 & 0.0000 & 0.0249 & 0.0059 & 63.4403 & 0.0684 \\
+incondicional (coortes > 2000) & log luzes per capita & 1992–2025 & 0.0630 & 0.0333 & 0.0590 & 120 & 597 & 23 & 759 & 0.0021 & 0.0052 & 0.0067 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log luzes per capita & 1992–2025 & 0.1061 & 0.0298 & 0.0004 & 120 & 597 & 23 & 759 & 0.0003 & 0.0120 & 0.0064 & 632.6786 & 0.0066 \\
+condicional, covariáveis 2000 + participação agrícola 2000 & log luzes per capita & 1992–2025 & 0.1764 & 0.0329 & 0.0000 & 120 & 597 & 23 & 759 & 0.0000 & 0.0159 & 0.0080 & 63.4403 & 0.0684 \\
+incondicional (coortes > 2000) & log emprego formal per capita & 1995–2025 & -0.0121 & 0.0302 & 0.6891 & 143 & 700 & 24 & 720 & 0.4915 & 0.0072 & 0.0077 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log emprego formal per capita & 1995–2025 & 0.0565 & 0.0243 & 0.0202 & 143 & 700 & 24 & 720 & 0.0478 & 0.0172 & 0.0065 & 632.6786 & 0.0066 \\
+incondicional (coortes > 2000) & Mortalidade infantil (por mil) & 2000–2024 & -0.3287 & 1.0256 & 0.7486 & 151 & 844 & 23 & 552 & 0.8761 & -0.0503 & 0.3488 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & Mortalidade infantil (por mil) & 2000–2024 & -0.4076 & 1.0472 & 0.6971 & 151 & 844 & 23 & 552 & 0.8842 & -0.1022 & 0.3472 & 632.6786 & 0.0066 \\
+incondicional (coortes > 2000) & IDEB anos iniciais & 2005–2025 & -0.0148 & 0.0577 & 0.7971 & 98 & 631 & 18 & 180 & 0.6167 & -0.0022 & 0.0119 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & IDEB anos iniciais & 2005–2025 & 0.0612 & 0.0486 & 0.2082 & 98 & 631 & 18 & 180 & 0.6934 & 0.0045 & 0.0116 & 632.6786 & 0.0066 \\
+incondicional (coortes > 2000) & log área urbanizada (MapBiomas) & 1985–2025 & -0.0108 & 0.0102 & 0.2888 & 154 & 836 & 24 & 960 & 0.4416 & -0.0005 & 0.0016 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log área urbanizada (MapBiomas) & 1985–2025 & -0.0072 & 0.0105 & 0.4920 & 154 & 836 & 24 & 960 & 0.1991 & -0.0005 & 0.0016 & 632.6786 & 0.0066 \\
+incondicional (coortes > 2000) & log luzes urbanas per capita & 2013–2025 & 0.0020 & 0.0273 & 0.9429 & 88 & 841 & 11 & 132 & 0.6802 & -0.0097 & 0.0113 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log luzes urbanas per capita & 2013–2025 & 0.0185 & 0.0244 & 0.4465 & 88 & 841 & 11 & 132 & 0.8488 & -0.0047 & 0.0110 & 632.6786 & 0.0066 \\
+incondicional (coortes > 2000) & log luzes fora da máscara urbana & 2013–2025 & 0.1101 & 0.0535 & 0.0396 & 88 & 841 & 11 & 132 & 0.1275 & -0.0418 & 0.0178 & — & — \\
+condicional, covariáveis 2000 (coortes > 2000) & log luzes fora da máscara urbana & 2013–2025 & 0.1163 & 0.0516 & 0.0241 & 88 & 841 & 11 & 132 & 0.7031 & -0.0143 & 0.0167 & 632.6786 & 0.0066 \\
+PIB per capita, antecipação 2 anos (incondicional) & log PIB per capita & 2002–2023 & 0.1128 & 0.0414 & 0.0064 & 140 & 853 & 20 & 378 & 0.1497 & 0.0079 & 0.0039 & — & — \\
+PIB per capita, antecipação 2 anos (condicional, covariáveis 2000) & log PIB per capita & 2002–2023 & 0.1438 & 0.0349 & 0.0000 & 139 & 846 & 20 & 378 & 0.0542 & 0.0096 & 0.0039 & — & — \\
+\bottomrule
+\end{tabular}
+\end{table}

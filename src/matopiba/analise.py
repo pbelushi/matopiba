@@ -10,6 +10,7 @@ Estimadores:
               forma reduzida e intervalo de Anderson-Rubin.
 """
 
+import warnings
 from dataclasses import dataclass
 
 import numpy as np
@@ -89,11 +90,17 @@ def amostra_did(p: pd.DataFrame, var: str = "agri_temp", limiar: float | None = 
 # ---------------------------------------------------------------- Callaway–Sant'Anna
 
 def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "unidade",
-           cluster: str = "cluster", balancear: bool = True, base: str = "varying") -> dict:
+           cluster: str = "cluster", balancear: bool = True, base: str = "varying",
+           antecipacao: int = 0, covariaveis: pd.DataFrame | None = None) -> dict:
     """ATT(g,t) com controles nunca tratados.
 
     base="varying": pré-períodos comparam t com t-1 (padrão do CS); pós comparam com g-1.
     base="universal": todos os períodos comparam com g-1 (pré-tendências acumuladas visíveis).
+    antecipacao=δ: o tratamento pode ter efeito δ anos antes de g; a base passa a g-1-δ e os
+    pré-períodos "varying" vão só até g-δ-1 (como `anticipation` no `did` do R).
+    covariaveis: DataFrame indexado pela unidade (valores fixos, pré-tratamento); com ele, cada
+    ATT(g,t) é o DiD duplamente robusto de Sant'Anna e Zhao (2020) com a função de influência de
+    DRDID::drdid_panel. Unidades sem covariável saem da amostra.
     balancear=True mantém só unidades observadas em todos os anos da janela (como o `did` do
     R com panel=TRUE); municípios criados no meio da janela saem — o nível AMC os cobre.
     """
@@ -105,8 +112,12 @@ def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "uni
     d[coorte] = d[coorte].where(d[coorte] <= anos[-1])
     # coortes sem período anterior observado na janela do desfecho não são identificadas
     d = d[d[coorte].isna() | (d[coorte] > anos[0])]
+    if covariaveis is not None:
+        d = d[d[unidade].isin(covariaveis.dropna().index)]
     w = d.pivot_table(index=unidade, columns="ano", values=y)
     info = d.drop_duplicates(unidade).set_index(unidade)[[coorte, cluster]].loc[w.index]
+    X = (np.column_stack([np.ones(len(w)), covariaveis.loc[w.index].to_numpy(float)])
+         if covariaveis is not None else None)
     g_all = info[coorte]
     nunca = g_all.isna()
     clusters = info[cluster].to_numpy()
@@ -115,27 +126,36 @@ def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "uni
     for g in sorted(g_all.dropna().unique()):
         trat = (g_all == g).to_numpy()
         for t in anos:
-            if t == anos[0] and base == "varying":
+            if not any(a < g - antecipacao for a in anos):
                 continue
-            if not any(a < g for a in anos):
-                continue
-            g_1 = max(a for a in anos if a < g)
+            g_1 = max(a for a in anos if a < g - antecipacao)
             if base == "universal":
                 if t == g_1:
                     continue
                 b0 = g_1
             else:
-                b0 = g_1 if t >= g else max(a for a in anos if a < t)
+                if t < g - antecipacao and t == anos[0]:
+                    continue
+                b0 = g_1 if t >= g - antecipacao else max(a for a in anos if a < t)
             dy = (w[t] - w[b0]).to_numpy()
             ok = ~np.isnan(dy)
             tt, cc = trat & ok, nunca.to_numpy() & ok
             if tt.sum() == 0 or cc.sum() < 2:
                 continue
-            a, b = dy[tt].mean(), dy[cc].mean()
-            inf = np.zeros(n)
-            inf[tt] = n * (dy[tt] - a) / tt.sum()
-            inf[cc] = -n * (dy[cc] - b) / cc.sum()
-            linhas.append({"coorte": int(g), "ano": int(t), "e": int(t - g), "att": a - b,
+            if X is None:
+                a, b = dy[tt].mean(), dy[cc].mean()
+                att = a - b
+                inf = np.zeros(n)
+                inf[tt] = n * (dy[tt] - a) / tt.sum()
+                inf[cc] = -n * (dy[cc] - b) / cc.sum()
+            else:
+                sub = tt | cc
+                att, inf_sub = _drdid_panel(dy[sub], tt[sub].astype(float), X[sub])
+                if not np.isfinite(att):
+                    continue
+                inf = np.zeros(n)
+                inf[sub] = n / sub.sum() * inf_sub
+            linhas.append({"coorte": int(g), "ano": int(t), "e": int(t - g), "att": att,
                            "n_tratados": int(tt.sum()), "n_controles": int(cc.sum())})
             ifs[(int(g), int(t))] = inf
     gt = pd.DataFrame(linhas)
@@ -165,6 +185,44 @@ def cs_did(df: pd.DataFrame, y: str, coorte: str = "coorte", unidade: str = "uni
     vcov = pd.DataFrame(_vcov_cluster(np.column_stack(list(ifs_e.values())), clusters, n),
                         index=list(ifs_e), columns=list(ifs_e))
     return {"gt": gt, "evento": evento, "simples": simples, "vcov_evento": vcov}
+
+
+def _drdid_panel(dy: np.ndarray, D: np.ndarray, X: np.ndarray) -> tuple[float, np.ndarray]:
+    """DiD duplamente robusto com painel (Sant'Anna e Zhao 2020; DRDID::drdid_panel, versão
+    "tradicional"): propensity score logit + regressão de Δy nos controles. Devolve o ATT e a
+    função de influência (ATT_hat - ATT ≈ média da função)."""
+    n = len(dy)
+    try:
+        return _drdid_calc(dy, D, X, n)
+    except (np.linalg.LinAlgError, ValueError):   # logit sem convergência ou matriz singular
+        return np.nan, np.zeros(n)
+
+
+def _drdid_calc(dy, D, X, n):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        ps = sm.Logit(D, X).fit(disp=0, maxiter=100)
+    p = np.minimum(ps.predict(X), 1 - 1e-6)
+    c = D == 0
+    beta = np.linalg.lstsq(X[c], dy[c], rcond=None)[0]
+    out = X @ beta
+    w_t = D
+    w_c = p * (1 - D) / (1 - p)
+    att_t = w_t * (dy - out)
+    att_c = w_c * (dy - out)
+    eta_t = att_t.mean() / w_t.mean()
+    eta_c = att_c.mean() / w_c.mean()
+    # representação linear assintótica da MQO (controles) e do logit
+    w_ols = (1 - D)
+    xpx_inv = np.linalg.inv((w_ols[:, None] * X).T @ X / n)
+    alr_ols = (w_ols * (dy - out))[:, None] * X @ xpx_inv
+    hess = np.linalg.inv(((p * (1 - p))[:, None] * X).T @ X / n)
+    alr_ps = ((D - p)[:, None] * X) @ hess
+    inf_t = (att_t - w_t * eta_t - alr_ols @ (w_t[:, None] * X).mean(0)) / w_t.mean()
+    m2 = (w_c * (dy - out - eta_c))[:, None] * X
+    inf_c = (att_c - w_c * eta_c + alr_ps @ m2.mean(0)
+             - alr_ols @ (w_c[:, None] * X).mean(0)) / w_c.mean()
+    return float(eta_t - eta_c), inf_t - inf_c
 
 
 def _vcov_cluster(infs: np.ndarray, clusters: np.ndarray, n: int) -> np.ndarray:
