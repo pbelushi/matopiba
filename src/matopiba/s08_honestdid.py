@@ -53,12 +53,14 @@ class Spec:
     limiar: float
     janela: tuple[int, int]
     alvos: tuple
+    covariaveis: bool = False   # CS condicional (DR) com as covariáveis de 2000 (s08_complementos)
 
 
 def especificacoes(nomes: list[str] | None = None) -> list[Spec]:
     lim = settings()["tratamento"]["limiar_padrao"]
     out = [Spec(e["nome"], e["desfecho"], e.get("limiar", lim),
-                tuple(e.get("janela", HD["janela"])), tuple(e.get("alvos", HD["alvos"])))
+                tuple(e.get("janela", HD["janela"])), tuple(e.get("alvos", HD["alvos"])),
+                e.get("covariaveis", False))
            for e in HD["especificacoes"]]
     if nomes:
         desconhecidas = set(nomes) - {s.nome for s in out}
@@ -72,9 +74,15 @@ def event_study(p: pd.DataFrame, sp: Spec) -> dict:
     """β e Σ do event study CS (base universal) na janela, sem o e = -1."""
     d = desfecho(sp.desfecho)
     s = amostra_did(p, limiar=sp.limiar)
+    cov = None
+    if sp.covariaveis:   # mesma amostra do condicional em s08_complementos
+        from matopiba.s08_complementos import covariaveis_2000
+
+        cov = covariaveis_2000(p, CFG["complementos"]["covariaveis_2000"])
+        s = s[~(s["coorte"] <= 2000) & s["unidade"].isin(cov.dropna().index)]
     x = s.assign(y=preparar_desfecho(s, d)).dropna(subset=["y"])
     x = x[x.groupby("unidade")["ano"].transform("nunique") == x["ano"].nunique()]
-    cs = cs_did(x, "y", balancear=False, base="universal")
+    cs = cs_did(x, "y", balancear=False, base="universal", covariaveis=cov)
     lo, hi = sp.janela
     es = list(range(lo, -1)) + list(range(0, hi + 1))
     falta = [e for e in es if e not in cs["vcov_evento"].index]
@@ -84,7 +92,8 @@ def event_study(p: pd.DataFrame, sp: Spec) -> dict:
     b, V = ev["att"].to_numpy(), cs["vcov_evento"].loc[es, es].to_numpy()
     npre = sum(e < -1 for e in es)
     return {"b": b, "V": V, "npre": npre, "npost": len(es) - npre, "ev": ev,
-            "rotulo": d.rotulo, "pre": pre_tendencia(b[:npre], V[:npre, :npre], es[:npre]),
+            "rotulo": d.rotulo + (" (condicional, covariáveis 2000)" if cov is not None
+                                  else ""), "pre": pre_tendencia(b[:npre], V[:npre, :npre], es[:npre]),
             "n_tratados": cs["simples"]["n_unidades_tratadas"],
             "n_controles": cs["simples"]["n_controles"]}
 

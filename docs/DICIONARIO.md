@@ -5,7 +5,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 
 ## painel_municipio
 
-228,411 linhas × 156 colunas. Chave: `id_municipio`, `ano`
+228,411 linhas × 160 colunas. Chave: `id_municipio`, `ano`
 
 | variável | descrição | unidade | fonte | agregação AMC |
 |---|---|---|---|---|
@@ -114,6 +114,9 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `matriculas_pre_escola` | Matrículas — pré-escola | nº | INEP Sinopse | soma |
 | `matriculas_profissional` | Matrículas — educação profissional | nº | INEP Sinopse | soma |
 | `matriculas_basica_total` | Matrículas — educação básica, total | nº | INEP Sinopse | soma |
+| `n_domicilios_censo` | Domicílios particulares permanentes (2010, 2022) | nº | Censo (SIDRA 3216, 6326) | soma |
+| `n_apartamentos` | Domicílios particulares permanentes do tipo apartamento | nº | Censo (SIDRA 3216, 6326) | soma |
+| `pct_apartamentos` | Participação dos apartamentos nos domicílios | 0–1 | Censo (SIDRA 3216, 6326) | razao (n_apartamentos / n_domicilios_censo) |
 | `nascidos_vivos` | Nascidos vivos (residência da mãe) | nº | SINASC | soma |
 | `nv_prenatal_7mais` | Nascidos vivos com 7+ consultas de pré-natal | nº | SINASC | soma |
 | `nv_prenatal_informado` | Nascidos vivos com nº de consultas informado | nº | SINASC | soma |
@@ -136,6 +139,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `luz_urbana_pc` | Radiância dentro da máscara urbana de 2012 por habitante | nW/cm²/sr por hab. | VIIRS + população | razao (viirs_urbano_soma / populacao) |
 | `share_va_agro` | Participação da agropecuária no VA | 0–1 | IBGE | razao (va_agropecuaria_real / va_real) |
 | `vinculos_pc` | Vínculos formais por habitante | nº/hab. | RAIS + população | razao (vinculos_total / populacao) |
+| `vinculos_nao_agro_mil_hab` | Vínculos formais não agro por mil habitantes | nº/mil hab. | RAIS + população | razao (vinculos_nao_agro / populacao) |
 | `familias_por_mil_hab` | Famílias beneficiárias (média mensal) por 1.000 habitantes |  | CGU + população | razao (familias_media_mensal / populacao) |
 | `flag_tmi_instavel` | Nascidos vivos < 50 (taxa instável) | | | |
 | `ganho_tecnologico` | Ganho tecnológico: (rendimento alto − baixo insumo) | | | |
@@ -168,7 +172,7 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 
 ## painel_amc
 
-176,095 linhas × 151 colunas. Chave: `id_amc`, `ano`
+176,095 linhas × 155 colunas. Chave: `id_amc`, `ano`
 
 | variável | descrição | unidade | fonte | agregação AMC |
 |---|---|---|---|---|
@@ -235,6 +239,8 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `matriculas_pre_escola` | Matrículas — pré-escola | nº | INEP Sinopse | soma |
 | `matriculas_profissional` | Matrículas — educação profissional | nº | INEP Sinopse | soma |
 | `matriculas_basica_total` | Matrículas — educação básica, total | nº | INEP Sinopse | soma |
+| `n_domicilios_censo` | Domicílios particulares permanentes (2010, 2022) | nº | Censo (SIDRA 3216, 6326) | soma |
+| `n_apartamentos` | Domicílios particulares permanentes do tipo apartamento | nº | Censo (SIDRA 3216, 6326) | soma |
 | `nascidos_vivos` | Nascidos vivos (residência da mãe) | nº | SINASC | soma |
 | `nv_prenatal_7mais` | Nascidos vivos com 7+ consultas de pré-natal | nº | SINASC | soma |
 | `nv_prenatal_informado` | Nascidos vivos com nº de consultas informado | nº | SINASC | soma |
@@ -286,6 +292,8 @@ Agregação para AMC: `soma`; `razao` (recalculada a partir dos componentes agre
 | `salario_medio_real_nao_agro` | Salário médio mensal — demais (1999+) | R$ de 2023 | RAIS | razao (massa_salarial_real_nao_agro / vinculos_nao_agro) |
 | `share_vinculos_agro` | Participação da agropecuária nos vínculos | 0–1 | RAIS | razao (vinculos_agro / vinculos_total) |
 | `vinculos_pc` | Vínculos formais por habitante | nº/hab. | RAIS + população | razao (vinculos_total / populacao) |
+| `vinculos_nao_agro_mil_hab` | Vínculos formais não agro por mil habitantes | nº/mil hab. | RAIS + população | razao (vinculos_nao_agro / populacao) |
+| `pct_apartamentos` | Participação dos apartamentos nos domicílios | 0–1 | Censo (SIDRA 3216, 6326) | razao (n_apartamentos / n_domicilios_censo) |
 | `tmi` | Taxa de mortalidade infantil | por 1.000 nascidos vivos | SIM/SINASC | razao (obitos_menor_1 / nascidos_vivos) |
 | `pct_prenatal_7mais` | Proporção com 7+ consultas de pré-natal | 0–1 | SINASC | razao (nv_prenatal_7mais / nv_prenatal_informado) |
 | `pct_prenatal_adequado_kotelchuck` | Proporção com pré-natal adequado ou mais (Kotelchuck, 2014+) | 0–1 | SINASC | razao (nv_prenatal_adequado_k / nv_prenatal_class) |

@@ -331,6 +331,23 @@ def censo2022() -> pd.DataFrame:
     return _salvar(df, "censo2022")
 
 
+def domicilios() -> pd.DataFrame:
+    """Domicílios particulares permanentes e apartamentos, Censos 2010 (universo, SIDRA 3216) e
+    2022 (SIDRA 6326). Total = soma dos tipos de domicílio."""
+    partes = []
+    for ano, t in CFG["sidra_domicilios"].items():
+        d = _sidra(t["tabela"], [t["variavel"]],
+                   {**{c: "Total" for c in t["outras_total"]}, t["tipo"]: "todas"}, "N6")
+        tipo = d[f"c{t['tipo']}"]
+        g = d.assign(apto=d["valor"].where(tipo == "Apartamento", 0)).groupby("id_municipio")
+        partes.append(pd.DataFrame({"n_domicilios_censo": g["valor"].sum(min_count=1),
+                                    "n_apartamentos": g["apto"].sum(min_count=1)})
+                      .reset_index().assign(ano=int(ano)))
+    df = pd.concat(partes, ignore_index=True)
+    df["pct_apartamentos"] = df["n_apartamentos"] / df["n_domicilios_censo"]
+    return _salvar(df, "domicilios")
+
+
 def migracao() -> pd.DataFrame:
     """% de não naturais do município (1991, 2000, 2010) e da UF (2010), ponderado."""
     t = f"{BD}.br_ibge_censo_demografico.microdados_pessoa"
@@ -498,7 +515,7 @@ def cobertura() -> str:
 
 BLOCOS = {
     "populacao": populacao, "pib": pib, "rais": rais, "saude": saude, "educacao": educacao,
-    "atlas": atlas, "censo2022": censo2022, "migracao": migracao,
+    "atlas": atlas, "censo2022": censo2022, "domicilios": domicilios, "migracao": migracao,
     "transferencias": transferencias, "fundiaria": fundiaria, "conflitos": conflitos,
 }
 

@@ -33,3 +33,5 @@ quando,alvo,modulo,segundos
 2026-10-22T11:57:52,analise,matopiba.s08_robustez,51
 2026-10-22T11:58:02,analise,matopiba.s08_luzes_sensor,10
 2026-10-22T11:58:13,analise,matopiba.s08_edificacoes,11
+2026-10-22T13:40:50,etapa7,matopiba.s07_paineis,27
+2026-10-22T13:42:31,testes,pytest,101

@@ -12,6 +12,8 @@
    tratados e controles) e entra como sensibilidade para PIB e luzes; a tabela traz o N
    efetivo dos controles com os pesos do escore de propensão.
 4. PIB per capita com antecipação de 2 anos (base g-3), incondicional e condicional.
+5. Vínculos não agro: log per capita (como em s08_heterogeneidade) contra nível (nº de
+   vínculos e vínculos por mil habitantes) e log do nº sem dividir pela população.
 
 Cada linha traz o ATT agregado, o teste de Wald dos pré-coeficientes (base universal,
 e = -5…-2) e a inclinação da pré-tendência.
@@ -183,6 +185,11 @@ def main() -> int:
     roda(s01, "log_pib_pc",
          f"PIB per capita, antecipação {a} anos (condicional, covariáveis 2000)",
          antecipacao=a, covariaveis=cov)
+
+    # 5. vínculos não agro em nível (a queda em log per capita vem do numerador?)
+    for nome in ["log_vinc_nao_agro_pc", "vinc_nao_agro", "vinc_nao_agro_mil_hab",
+                 "log_vinc_nao_agro"]:
+        roda(s, nome, "vínculos não agro: log per capita vs. nível")
 
     t = pd.DataFrame(linhas)
     salvar_tabela(t, "s08_complementos", "Testes complementares do DiD (Callaway–Sant'Anna): "

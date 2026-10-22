@@ -172,6 +172,9 @@ socio:
     tabela: 10295
     variaveis: {renda_dom_pc_media: 13431, renda_dom_pc_mediana: 13534}
     classificacoes: [2, 86, 58]
+  sidra_domicilios:           # domicílios particulares permanentes por tipo (apartamento)
+    "2010": {tabela: 3216, variavel: 96, tipo: 125, outras_total: [1, 63, 299, 300]}
+    "2022": {tabela: 6326, variavel: 381, tipo: 125, outras_total: []}
   sidra_censo_agro:
     "2006": {tabela: 837, classificacoes_total: [12517, 218, 12568]}
     "2017": {tabela: 6754, classificacoes_total: [829, 221, 12517]}
@@ -232,6 +235,9 @@ analise:
     - {nome: log_luz_viirs_pc, coluna: viirs_soma, por: populacao, rotulo: "log luzes pc, VIIRS", anos: [2013, 2025], log: true}
     - {nome: log_luz_chen_pc, coluna: chen_soma, por: populacao, rotulo: "log luzes pc, Chen (VIIRS-like)", anos: [2000, 2024], log: true}
     - {nome: log_area_urbana_2000, coluna: area_urbano_ha, rotulo: "log área urbanizada (MapBiomas, 2000–2025)", anos: [2000, 2025], log: true}
+    - {nome: vinc_nao_agro, coluna: vinculos_nao_agro, rotulo: "vínculos não agro (nº)", anos: [1995, 2025]}
+    - {nome: vinc_nao_agro_mil_hab, coluna: vinculos_nao_agro_mil_hab, rotulo: "vínculos não agro por mil hab.", anos: [1995, 2025]}
+    - {nome: log_vinc_nao_agro, coluna: vinculos_nao_agro, rotulo: "log vínculos não agro (nº)", anos: [1995, 2025], log: true}
     - {nome: log_luz_fora_sem2013, coluna: viirs_fora_soma, rotulo: "log luzes fora da máscara urbana (sem 2013)", anos: [2014, 2025], log: true}
   complementos:               # s08_complementos
     covariaveis_2000:         # CS condicional (duplamente robusto); só coortes > 2000
@@ -265,3 +271,4 @@ analise:
       - {nome: luz_urbana, desfecho: log_luz_urbana_pc}
       - {nome: luz_fora, desfecho: log_luz_fora}
       - {nome: luz_fora_sem2013, desfecho: log_luz_fora_sem2013}
+      - {nome: luz_fora_condicional, desfecho: log_luz_fora, covariaveis: true}

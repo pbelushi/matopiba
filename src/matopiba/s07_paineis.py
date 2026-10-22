@@ -165,6 +165,18 @@ VARS: dict[str, V] = {
                              "0–1", num="vinculos_agro", den="vinculos_total"),
     "vinculos_pc": V("RAIS + população", "razao", "Vínculos formais por habitante", "nº/hab.",
                      num="vinculos_total", den="populacao"),
+    "vinculos_nao_agro_mil_hab": V("RAIS + população", "razao",
+                                   "Vínculos formais não agro por mil habitantes",
+                                   "nº/mil hab.", num="vinculos_nao_agro", den="populacao",
+                                   mult=1000),
+    # domicílios (Censos 2010 e 2022, SIDRA)
+    "n_domicilios_censo": V("Censo (SIDRA 3216, 6326)", "soma",
+                            "Domicílios particulares permanentes (2010, 2022)", "nº"),
+    "n_apartamentos": V("Censo (SIDRA 3216, 6326)", "soma",
+                        "Domicílios particulares permanentes do tipo apartamento", "nº"),
+    "pct_apartamentos": V("Censo (SIDRA 3216, 6326)", "razao",
+                          "Participação dos apartamentos nos domicílios", "0–1",
+                          num="n_apartamentos", den="n_domicilios_censo"),
     # saúde
     "nascidos_vivos": V("SINASC", "soma", "Nascidos vivos (residência da mãe)", "nº"),
     "obitos_menor_1": V("SIM", "soma", "Óbitos de menores de 1 ano (residência)", "nº"),
@@ -263,7 +275,8 @@ def painel_municipio(universo: pd.DataFrame) -> pd.DataFrame:
     urb = _ler("urbano_mun_ano")
     p = p.merge(urb[[c for c in urb.columns if c in VARS or c in ("id_municipio", "ano")]],
                 how="left")
-    for b in ["socio_populacao", "socio_pib", "socio_rais", "socio_educacao"]:
+    for b in ["socio_populacao", "socio_pib", "socio_rais", "socio_educacao",
+              "socio_domicilios"]:
         d = _ler(b)
         p = p.merge(d[[c for c in d.columns if c in VARS or c in ("id_municipio", "ano")]],
                     on=["id_municipio", "ano"], how="left")

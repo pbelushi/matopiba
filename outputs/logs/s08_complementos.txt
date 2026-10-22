@@ -27,3 +27,7 @@
   condicional, covariáveis 2000 (coortes > 2000) | log_luz_fora: 0.1163** (0.0516), 88 tratados; pré Wald p 0.703
   PIB per capita, antecipação 2 anos (incondicional) | log_pib_pc: 0.1128*** (0.0414), 140 tratados; pré Wald p 0.150
   PIB per capita, antecipação 2 anos (condicional, covariáveis 2000) | log_pib_pc: 0.1438*** (0.0349), 139 tratados; pré Wald p 0.054
+  vínculos não agro: log per capita vs. nível | log_vinc_nao_agro_pc: -0.1121** (0.0438), 159 tratados; pré Wald p 0.603
+  vínculos não agro: log per capita vs. nível | vinc_nao_agro: 13.9151 (413.6900), 163 tratados; pré Wald p 0.358
+  vínculos não agro: log per capita vs. nível | vinc_nao_agro_mil_hab: 3.5010 (2.8431), 163 tratados; pré Wald p 0.318
+  vínculos não agro: log per capita vs. nível | log_vinc_nao_agro: -0.0760* (0.0421), 159 tratados; pré Wald p 0.834

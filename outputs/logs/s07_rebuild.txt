@@ -1,0 +1,14 @@
+
+=== matopiba.s07_paineis ===
+painel_municipio: 228,411 linhas × 160 colunas
+painel_amc: 176,095 linhas × 155 colunas
+painel_censos: 25,747 linhas × 42 colunas
+.................                                                        [100%]
+============================== warnings summary ===============================
+tests/test_analise.py::test_cs_confere_com_differences[desfecho0]
+  C:\Users\psilva4.IFC\.venvs\matopiba\Lib\site-packages\differences\models\attgt\data_validator\data_validator_utility.py:198: UserWarning: 5 entity-events ignored because the event (cohort) date
+   is after the end of the panel for the specific entity, as if never treated
+    warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+17 passed, 1 warning in 97.58s (0:01:37)

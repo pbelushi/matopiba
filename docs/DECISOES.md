@@ -320,3 +320,39 @@ Formato: data — decisão — motivo — alternativas consideradas.
      tratamento começando 1–2 anos antes, é uma trajetória de crescimento mais longa. O ATT
      maior com antecipação incorpora o crescimento de e = -2 e -1, que já fazia parte dessa
      trajetória.
+- 2026-10-22 — Apartamentos nos Censos (bloco `domicilios` do s05): 2010 = SIDRA 3216 (universo,
+  domicílios particulares permanentes, demais classificações no total), 2022 = SIDRA 6326
+  (ocupados); % de apartamentos = apartamentos / soma dos tipos. Totais nacionais conferem com o
+  IBGE (57,3 e 72,5 milhões de domicílios; apartamentos 10,7% → 14,9% dos domicílios; o IBGE
+  divulga 8,5% → 12,5% das pessoas). Comparabilidade: o IBGE manteve a redação de "Casa", "Casa
+  de vila ou em condomínio" e "Apartamento" e afirma que a comparação 2010–2022 é possível para
+  elas (Características dos domicílios, Censo 2022, p. 26); mudaram só a habitação indígena e a
+  nova "estrutura residencial permanente degradada ou inacabada", que somam 0,05–0,06% dos
+  domicílios nos grupos e mudam o % de apartamentos em no máximo 0,13 p.p. (mantido o total
+  como denominador). O tipo é anotado pelo recenseador no cadastro do endereço nos dois censos.
+- 2026-10-22 — Validação da verticalização (`s08_verticalizacao`). Medida: a altura média do
+  Open Buildings na máscara acompanha o % de apartamentos em nível (Spearman 0,47 em 2023×2022;
+  0,43 em 2016×2010; *** com EF de UF), mas pouco em variação (Spearman 0,13 entre Δ altura
+  2016→2023 e Δ % apartamentos 2010→2022; a Δ altura oscila ±0,5 m em municípios sem nenhum
+  apartamento, ruído de medida). Efeito: o agro não move o % de apartamentos (2SLS +7,4 p.p. /
+  −1,4 p.p. com nível inicial, F 17–18; DiD 2×2 +0,15 p.p., 100 tratados; nada significativo).
+  Leitura: a altura do Open Buildings é uma medida válida de verticalização no corte
+  transversal, mas a variação 2016→2023 é ruidosa e o efeito positivo do agro na altura não se
+  confirma nos apartamentos; o volume construído (que soma área e altura) é a métrica mais
+  confiável das edificações.
+- 2026-10-22 — Vínculos não agro em nível (`s08_complementos`, seção 5): log per capita
+  −0,112** (pré p 0,60); log do nº sem dividir pela população −0,076* (pré p 0,83), então cerca
+  de 2/3 da queda per capita vem do número de vínculos e 1/3 do crescimento da população. Em
+  nível o efeito some: nº de vínculos +14 (ep 414; distribuição dominada pelas cidades grandes,
+  mediana 618 vínculos) e vínculos por mil hab. +3,5 (ep 2,8; média 104). O log dá o mesmo peso
+  proporcional a cada município; a queda é proporcional e concentrada nos municípios pequenos,
+  sem perda absoluta relevante de emprego não agro.
+- 2026-10-22 — HonestDiD condicional das luzes fora da máscara (`luz_fora_condicional`;
+  `s08_honestdid` aceita `covariaveis: true`, com as covariáveis de 2000 e a amostra de
+  s08_complementos; Σ vem das funções de influência do DR). 88 tratados; sem pré-tendência
+  (Wald p 0,70, inclinação −1,4%/ano, ep 1,7%). Média e = 0…10: IC convencional [0,024;
+  0,258]; Δ^RM exclui zero até Mbar 0,05 ([0,006; 0,274]) e rompe em 0,10; Δ^SD com M = 0
+  [0,026; 0,397], rompe em M = 0,0025. Em e = 5 o IC convencional já inclui zero. Comparado
+  ao incondicional (ruptura Δ^RM em 0,05; Δ^SD com M = 0 inflado pela pré-tendência negativa,
+  [0,131; 0,532]), o condicional é mais limpo e um pouco mais robusto, mas a evidência de luz
+  nova fora das cidades continua frágil: some com violações pequenas das tendências paralelas.
