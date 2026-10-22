@@ -1,5 +1,49 @@
 # Agro no Matopiba e qualidade de vida
 
+## English summary
+
+**Agricultural Frontier Expansion and Local Development: Evidence from Matopiba, Brazil** —
+data pipeline and replication code (version 1.0; cite via [`CITATION.cff`](CITATION.cff)).
+
+**Objective.** Estimate how the expansion of temporary crops (mainly soy) in Matopiba —
+the agricultural frontier across Maranhão, Tocantins, Piauí and Bahia — affected local
+development between 1985 and 2025: GDP per capita, night-time lights, formal employment (farm
+and non-farm), infant mortality, education, urbanization and buildings. Municipalities of the
+Cerrado biome outside Matopiba serve as controls. The pipeline builds municipal, AMC
+(minimum comparable areas) and census panels from MapBiomas land use, DMSP/VIIRS night-time
+lights, Google Open Buildings, IBGE censuses and administrative records (RAIS, DATASUS, INEP),
+and estimates staggered difference-in-differences (Callaway and Sant'Anna, unconditional and
+doubly robust), HonestDiD sensitivity analysis, and shift-share / FAO-GAEZ instruments in
+long differences. Documentation, variable names and decision logs are in Portuguese.
+
+**How to reproduce.**
+
+1. Set up a Google Cloud project (requirements below), authenticate with
+   `python -c "import ee; ee.Authenticate()"` and set the project ID in
+   `config/settings.yaml` (`gcp.gee_project`, `gcp.billing_project`) or in the environment
+   variables `MATOPIBA_GEE_PROJECT` / `MATOPIBA_BILLING_PROJECT`.
+2. Create a Python ≥ 3.11 environment from the lock file:
+   `pip install -r requirements.lock && pip install --no-deps -e .`
+3. Run the full pipeline and tests: `python -m matopiba.tarefas all testes` (or `make all`);
+   `python -m matopiba.tarefas lista` lists the per-stage targets. The HonestDiD step runs in a
+   separate environment (`make honestdid`, see below).
+4. All data are downloaded or queried by the scripts, except the optional CPT rural-conflict
+   data (manual request). A clean run takes about one hour plus Earth Engine batch queue time.
+
+**Google Cloud account requirements.**
+
+- A Google Cloud project with the **Earth Engine API** and **BigQuery API** enabled, registered
+  for Earth Engine (non-commercial use), with an Earth Engine asset folder named `matopiba`
+  (`projects/<project-id>/assets/matopiba`).
+- **BigQuery** (Base dos Dados public datasets): about 200 GB scanned per full run, within the
+  1 TB/month free tier; every query is dry-run against a GB cap first.
+- **Earth Engine compute**, mostly batch tasks whose results are stored as assets and reused:
+  stage 4 (Open Buildings at 100 m, 8 years) ≈ 60 EECU-hours; stage 4b (urban mask, lights
+  inside/outside it, Open Buildings at 4 m for 2016 and 2023) ≈ 475 EECU-hours, of which
+  ≈ 385 for Open Buildings at 4 m (set `urbano.ob.confirmado: false` to run only the 10-
+  municipality pilot). Night-time lights (stage 3) run interactively (~30 min).
+
+
 Pipeline de dados e análise sobre os efeitos da expansão agrícola no Matopiba (MA, TO, PI, BA)
 sobre renda, emprego, saúde, educação e desigualdade, de 1985 a 2025, com municípios do Cerrado
 fora do Matopiba como controles.
@@ -107,6 +151,10 @@ Cerca de 40 minutos para as 7 especificações de `analise.honestdid` (8 process
   - Etapa 4 (Open Buildings): 8 tasks batch, cerca de 60 EECU-horas. Os resultados ficam como
     assets em `projects/<ID>/assets/matopiba/construido_<ano>`; se existirem, não são
     recalculados (use `python -m matopiba.s04_construido --refazer` para forçar).
+  - Etapa 4b (máscara urbana): cerca de 475 EECU-horas na primeira execução — máscara 11,
+    área da máscara por município 78, luzes 2, piloto 0,6 e Open Buildings a 4 m (2016 e 2023)
+    384. Assets reaproveitados nas execuções seguintes; com `urbano.ob.confirmado: false` só o
+    piloto roda.
 - **Execução completa em ambiente limpo (20/10/2026): 57 min**, mais 4 min de instalação do venv.
   As luzes (32 min) dominam o tempo. Por etapa: 0: 22 s · 1: 4,6 min · 2: 1,3 min · 3: 32 min ·
   4: 2 min (assets já existentes) · 5: 6,8 min · 6: 3,7 min · 7: 11 s · testes: 45 s ·
