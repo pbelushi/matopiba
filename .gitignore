@@ -37,3 +37,5 @@ data/_backup*/
 # painéis grandes (o GitHub recusa arquivos > 100 MB); regenerar com `make all`
 data/processed/painel_municipio.parquet
 data/processed/painel_amc.parquet
+# tem colunas derivadas do FAO-GAEZ (CC BY-NC-SA 3.0 IGO); regenerar com `make etapa7`
+data/processed/painel_censos.parquet
