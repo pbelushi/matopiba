@@ -4,9 +4,9 @@
 
 gcp:
   # Projeto do Google Cloud com a API do Earth Engine habilitada
-  gee_project: "matopiba-512215"
+  gee_project: "PREENCHER_ID_DO_PROJETO"
   # Projeto de billing usado nas consultas ao Base dos Dados (BigQuery)
-  billing_project: "matopiba-512215"
+  billing_project: "PREENCHER_ID_DO_PROJETO"
 
 paths:
   raw: data/raw

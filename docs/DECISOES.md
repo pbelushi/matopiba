@@ -74,7 +74,7 @@ Formato: data — decisão — motivo — alternativas consideradas.
 - 2026-10-20 — Grupo `outros` sem Open Buildings (NaN); para todos os municípios, a área
   urbanizada do MapBiomas (1985–2025) entra como complemento em `area_urbana_mb_ha`.
 - 2026-10-20 — Malha municipal guardada como asset no EE em
-  `projects/matopiba-512215/assets/matopiba/municipios_*` (33 partes, simplificada em 10 m),
+  `projects/<gee_project>/assets/matopiba/municipios_*` (33 partes, simplificada em 10 m),
   reaproveitável nas próximas etapas.
 - 2026-10-20 — Etapa 5: universo = todos os municípios, então as consultas não filtram por
   município; todas agregam no servidor e passam por dry run com limite de GB. Volume total

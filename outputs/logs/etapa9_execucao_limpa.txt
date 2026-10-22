@@ -1,7 +1,7 @@
 
 === matopiba.s00_check_auth ===
-[OK]    Earth Engine: projeto=matopiba-512215, chamada de teste ok (SRTM com 1 banda)
-[OK]    Base dos Dados: billing=matopiba-512215 (credenciais do Earth Engine), dry run ok (0.15 MB seriam processados)
+[OK]    Earth Engine: projeto=<gee_project>, chamada de teste ok (SRTM com 1 banda)
+[OK]    Base dos Dados: billing=<gee_project> (credenciais do Earth Engine), dry run ok (0.15 MB seriam processados)
 
 === matopiba.s01_universo ===
 # Etapa 1 — universo: aceite
@@ -180,32 +180,32 @@ Casos por ano: {1986: 36, 1987: 5, 1988: 11, 1989: 7, 1990: 4, 1991: 12, 1992: 1
   16s
 [educacao]
 Traceback (most recent call last):
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 1319, in do_open
+  File "<python>\Lib\urllib\request.py", line 1319, in do_open
     h.request(req.get_method(), req.selector, req.data, headers,
     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
               encode_chunked=req.has_header('Transfer-encoding'))
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1338, in request
+  File "<python>\Lib\http\client.py", line 1338, in request
     self._send_request(method, url, body, headers, encode_chunked)
     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1384, in _send_request
+  File "<python>\Lib\http\client.py", line 1384, in _send_request
     self.endheaders(body, encode_chunked=encode_chunked)
     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1333, in endheaders
+  File "<python>\Lib\http\client.py", line 1333, in endheaders
     self._send_output(message_body, encode_chunked=encode_chunked)
     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1093, in _send_output
+  File "<python>\Lib\http\client.py", line 1093, in _send_output
     self.send(msg)
     ~~~~~~~~~^^^^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1037, in send
+  File "<python>\Lib\http\client.py", line 1037, in send
     self.connect()
     ~~~~~~~~~~~~^^
-  File "C:\WBG\Python313\Lib\http\client.py", line 1479, in connect
+  File "<python>\Lib\http\client.py", line 1479, in connect
     self.sock = self._context.wrap_socket(self.sock,
                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
                                           server_hostname=server_hostname)
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\ssl.py", line 455, in wrap_socket
+  File "<python>\Lib\ssl.py", line 455, in wrap_socket
     return self.sslsocket_class._create(
            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
         sock=sock,
@@ -215,10 +215,10 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^
     )
     ^
-  File "C:\WBG\Python313\Lib\ssl.py", line 1076, in _create
+  File "<python>\Lib\ssl.py", line 1076, in _create
     self.do_handshake()
     ~~~~~~~~~~~~~~~~~^^
-  File "C:\WBG\Python313\Lib\ssl.py", line 1372, in do_handshake
+  File "<python>\Lib\ssl.py", line 1372, in do_handshake
     self._sslobj.do_handshake()
     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
 ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
@@ -228,42 +228,42 @@ During handling of the above exception, another exception occurred:
 Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
   File "<frozen runpy>", line 88, in _run_code
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\tarefas.py", line 89, in <module>
+  File "src\matopiba\tarefas.py", line 89, in <module>
     sys.exit(main())
              ~~~~^^
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\tarefas.py", line 82, in main
+  File "src\matopiba\tarefas.py", line 82, in main
     registrar(alvo, mod, rodar_modulo(mod))
                          ~~~~~~~~~~~~^^^^^
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\tarefas.py", line 41, in rodar_modulo
+  File "src\matopiba\tarefas.py", line 41, in rodar_modulo
     cod = m.main()
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\s05_socio.py", line 501, in main
+  File "src\matopiba\s05_socio.py", line 501, in main
     BLOCOS[b]()
     ~~~~~~~~~^^
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\s05_socio.py", line 200, in educacao
+  File "src\matopiba\s05_socio.py", line 200, in educacao
     ideb = pd.concat([ideb, _ideb_inep(ideb)], ignore_index=True)
                             ~~~~~~~~~~^^^^^^
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\s05_socio.py", line 169, in _ideb_inep
+  File "src\matopiba\s05_socio.py", line 169, in _ideb_inep
     _baixar_zip(info["url"], arq.parents[1])
     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\src\matopiba\s05_socio.py", line 158, in _baixar_zip
+  File "src\matopiba\s05_socio.py", line 158, in _baixar_zip
     with urllib.request.urlopen(url, timeout=600) as r:
          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 189, in urlopen
+  File "<python>\Lib\urllib\request.py", line 189, in urlopen
     return opener.open(url, data, timeout)
            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 489, in open
+  File "<python>\Lib\urllib\request.py", line 489, in open
     response = self._open(req, data)
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 506, in _open
+  File "<python>\Lib\urllib\request.py", line 506, in _open
     result = self._call_chain(self.handle_open, protocol, protocol +
                               '_open', req)
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 466, in _call_chain
+  File "<python>\Lib\urllib\request.py", line 466, in _call_chain
     result = func(*args)
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 1367, in https_open
+  File "<python>\Lib\urllib\request.py", line 1367, in https_open
     return self.do_open(http.client.HTTPSConnection, req,
            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                         context=self._context)
                         ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\WBG\Python313\Lib\urllib\request.py", line 1322, in do_open
+  File "<python>\Lib\urllib\request.py", line 1322, in do_open
     raise URLError(err)
 urllib.error.URLError: <urlopen error [WinError 10054] An existing connection was forcibly closed by the remote host>
 === RETOMADA 2026-10-20T23:08:30-03:00: etapa5 em diante (falha de rede no INEP na 1a tentativa) ===
@@ -305,7 +305,7 @@ urllib.error.URLError: <urlopen error [WinError 10054] An existing connection wa
   socio_fundiaria: 11,111 linhas, 5,564 municípios
   170s
 [conflitos]
-  conflitos: arquivo da CPT não encontrado em C:\Users\psilva4.IFC\OneDrive - WBG\Documents\Apps\matopiba\data\raw\cpt\conflitos_municipio_ano.csv (download manual)
+  conflitos: arquivo da CPT não encontrado em data\raw\cpt\conflitos_municipio_ano.csv (download manual)
   0s
 # Cobertura dos indicadores socioeconômicos (Etapa 5)
 
@@ -575,7 +575,7 @@ painel_censos: 25,747 linhas × 42 colunas
 ...............                                                          [100%]
 ============================== warnings summary ===============================
 tests/test_analise.py::test_cs_confere_com_differences[desfecho0]
-  C:\Users\psilva4.IFC\.venvs\matopiba_limpo\Lib\site-packages\differences\models\attgt\data_validator\data_validator_utility.py:198: UserWarning: 5 entity-events ignored because the event (cohort) date
+  <venv>\Lib\site-packages\differences\models\attgt\data_validator\data_validator_utility.py:198: UserWarning: 5 entity-events ignored because the event (cohort) date
    is after the end of the panel for the specific entity, as if never treated
     warn(
 
@@ -736,7 +736,7 @@ polos: Formosa do Rio Preto, São Desidério, Baixa Grande do Ribeiro, Balsas, B
 ...............                                                          [100%]
 ============================== warnings summary ===============================
 tests/test_analise.py::test_cs_confere_com_differences[desfecho0]
-  C:\Users\psilva4.IFC\.venvs\matopiba_limpo\Lib\site-packages\differences\models\attgt\data_validator\data_validator_utility.py:198: UserWarning: 5 entity-events ignored because the event (cohort) date
+  <venv>\Lib\site-packages\differences\models\attgt\data_validator\data_validator_utility.py:198: UserWarning: 5 entity-events ignored because the event (cohort) date
    is after the end of the panel for the specific entity, as if never treated
     warn(
 
