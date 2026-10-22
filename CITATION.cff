@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this code or its results, please cite it as below."
+type: software
+title: "Agricultural Frontier Expansion and Local Development: Evidence from Matopiba, Brazil"
+abstract: >-
+  Data pipeline and replication code for a study of how agricultural frontier expansion in
+  Matopiba (Maranhão, Tocantins, Piauí and Bahia, Brazil) affected local income, employment,
+  health, education and urbanization between 1985 and 2025, using Cerrado municipalities
+  outside Matopiba as controls. Combines MapBiomas land use, night-time lights, Google Open
+  Buildings, IBGE and administrative records, and estimates staggered difference-in-differences
+  (Callaway and Sant'Anna), HonestDiD sensitivity analysis and shift-share instruments.
+authors:
+  - family-names: Silva
+    given-names: Paulo Roberto
+    affiliation: International Finance Corporation
+    orcid: "https://orcid.org/0000-0003-0997-4322"
+version: "1.0"
+date-released: "2026-10-22"
+license: MIT
+url: "https://github.com/pbelushi/matopiba"
+repository-code: "https://github.com/pbelushi/matopiba"
+keywords:
+  - agricultural frontier
+  - Matopiba
+  - Cerrado
+  - difference-in-differences
+  - night-time lights
+  - Brazil
